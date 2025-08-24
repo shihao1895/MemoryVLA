@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="An Iterative Refinement-based Framework for Training-free Segmentation.">
+  <meta name="keywords" content="Semantic Segmentation, Stable Diffusion, Attention Mechanism, Iterative Refinement">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>MemoryVLA</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/icon.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://shihao1895.github.io">Hao Shi</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://xb534.github.io">Bin Xie</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=pF9KA1sAAAAJ">Yingfei Liu</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://github.com/linsun449">Lin Sun</a><sup>4</sup>,
+            </span>
+            <span class="author-block">
+              <a href="">Fengrong Liu</a><sup>5</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=YI0sRroAAAAJ">Tiancai Wang</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=k2ziPUsAAAAJ">Erjin Zhou</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=bzzBut4AAAAJ">Haoqiang Fan</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=yuB-cfoAAAAJ">Xiangyu Zhang</a><sup>3,6</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=-P9LwcgAAAAJ">Gao Huang</a><sup>1</sup><sup>✉</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Department of Automation, BNRist, Tsinghua University,</span>
+            <span class="author-block"><sup>2</sup>Dexmal,</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>3</sup>MEGVII Technology,</span>
+            <span class="author-block"><sup>4</sup>Tianjin University,</span>
+            <span class="author-block"><sup>5</sup>Harbin Institute of Technology,</span>
+            <span class="author-block"><sup>6</sup>StepFun</span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block">shi-h23@mails.tsinghua.edu.cn,</span>
+            <span class="author-block">wtc@dexmal.com,</span>
+            <span class="author-block">gaohuang@tsinghua.edu.cn</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="static/files/MemoryVLA_paper.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Arxiv Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv(Soon)</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code(Soon)</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Intro-->
+<section class="hero teaser">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <!-- <h2 class="title is-3">Introduction</h2> -->
+      <div style="width:80%; margin:0 auto;">
+        <img src="static/images/fig_1_intro.png" style="width:100%; height:auto; margin-bottom:1rem;">
+        <p class="has-text-justified is-size-6" style="margin-top:1rem;">
+          <b>Introduction.</b>
+          (a) In <i>Push Buttons</i> tasks, pre- and post-push states look nearly identical, calling for <b>temporal modeling</b>. 
+          (b) Humans handle manipulation tasks via a dual-memory system: <b>working memory (neural activity)</b> supports short-term control, while <b></b>episodic memory (hippocampus)</b> preserves long-term experience. 
+          (c) Inspired by this, MemoryVLA introduces a Perceptual–Cognitive Memory Bank that consolidates low-level perceptual details and high-level cognitive semantics for temporally aware decision making. 
+          (d) MemoryVLA outperforms state-of-the-art baselines.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Abstract -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Temporal context is essential for robotic manipulation because such tasks are inherently non-Markovian, yet mainstream VLA models typically overlook it and struggle with long-horizon, temporally dependent tasks. 
+            Cognitive science suggests that humans rely on working memory to buffer short-lived representations for immediate control, while the <b>hippocampal</b> system preserves verbatim episodic details and semantic gist of past experience for long-term memory. 
+          </p>
+          <p>
+            Inspired by these mechanisms, we propose <b>MemoryVLA</b>, a Cognition-Memory-Action framework for long-horizon robotic manipulation.
+            A pretrained VLM encodes the observation into perceptual and cognitive tokens that form working memory, while a Perceptual-Cognitive Memory Bank stores low-level details and high-level semantics consolidated from it.
+            Working memory retrieves decision-relevant entries from the bank, adaptively fuses them with current tokens, and updates the bank by merging redundancies. Using these tokens, a memory-conditioned diffusion action expert yields temporally aware action sequences.
+          </p>
+          <p>
+            We evaluate MemoryVLA on 150+ simulation and real-world tasks across three robots.
+            On SimplerEnv-Bridge, Fractal, and LIBERO-5 suites, it achieves 71.9%, 72.7%, and 96.5% success rates, respectively, all outperforming state-of-the-art baselines CogACT and PI-0, with a notable +14.6 gain on Bridge. 
+            On 12 real-world tasks spanning general skills and long-horizon temporal dependencies, <b></b>MemoryVLA</b> achieves 84.0% success rate, with long-horizon tasks showing a +26 improvement over state-of-the-art baseline.
+            Moreover, MemoryVLA exhibits strong robustness and generalization under various out-of-distribution conditions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Framework -->
+<section class="hero teaser">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <h2 class="title is-3 mb-5">Framework</h2>
+      <div style="width:80%; margin:0 auto;">
+        <img src="static/images/fig_2_method.png"
+             style="width:100%; height:auto; margin-bottom:1rem;">
+        <p class="has-text-justified is-size-6 "
+           style="margin-top:1rem; margin-bottom:2.5rem;">
+          <b>Overall architecture of MemoryVLA.</b> 
+          RGB observation and language instruction are encoded by a 7B VLM into perceptual and cognitive tokens, forming short-term working memory. 
+          The working memory queries a perceptual-cognitive memory bank (PCMB) to retrieve relevant historical context, including high-level semantics and low-level visual details, adaptively fuses it with current tokens, and consolidates the PCMB by merging the most similar neighbors. 
+          The memory-augmented tokens then condition a diffusion transformer to predict a sequence of future actions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experimental Setup -->
+<section class="hero teaser">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <h2 class="title is-3 mb-5">Experimental Setup</h2>
+      <div style="width:80%; margin:0 auto;">
+        <img src="static/images/fig_4_exp_setup.png"
+             style="width:100%; height:auto; margin-bottom:1rem;">
+        <p class="has-text-justified is-size-6"
+           style="margin-top:1rem; margin-bottom:2.5rem;">
+          <b>Experimental setup overview.</b> 
+          Top: three simulation benchmarks, <i>SIMPLER-Bridge</i> with WidowX, <i>SIMPLER-Fractal</i> with Google Robot, and <i>LIBERO</i> with Franka. 
+          Bottom: real-world evaluation on two suites, <i>General</i> and <i>Long-horizon Temporal</i>. 
+          In total, we evaluate three robots across 10 suites, spanning over <b>150 tasks</b> and <b>500 variations</b>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Video -->
+<section class="hero teaser">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <!-- Real -->
+      <h2 class="title is-3 mt-6">Real-world Evaluation</h2>
+
+      <!-- General -->
+      <h3 class="title is-4 mt-4">General Manipulation Tasks</h3>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/1_InsertCircle.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Insert Circle</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/2_PutEggInPan.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Egg in Pan</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/3_PutEggInOven.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Egg in Oven</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/4_StackCup.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Stack Cups</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/5_StackBlock.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Stack Blocks</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/6_PickDiverseFruits_apple.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Pick Diverse Fruits (apple)</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/6_PickDiverseFruits_banana.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Pick Diverse Fruits (banana)</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/6_PickDiverseFruits_carrot.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Pick Diverse Fruits (carrot)</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/6_PickDiverseFruits_chili.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Pick Diverse Fruits (chili)</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/General/6_PickDiverseFruits_grape.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Pick Diverse Fruits (grape)</p>
+        </div>
+      </div>
+
+      <!-- Temporal -->
+      <h3 class="title is-4 mt-4">Long-horizon Temporal Tasks</h3>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/Temporal/7_SeqPushButtons.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Seq. Push Buttons</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/Temporal/8_ChangeFood.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Change Food</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/Temporal/9_GuessWhere.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Guess Where</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/Temporal/10_CleanTableCount.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Clean Table &amp; Count</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/Temporal/11_PickPlaceOrder.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Pick Place Order</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/Real/Temporal/12_CleanRestaurantTable.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Clean Rest. Table</p>
+        </div>
+      </div>
+
+      <!-- SimplerEnv -->
+      <h2 class="title is-3 mt-6">SimplerEnv Simulation Evaluation</h2>
+
+      <!-- Bridge -->
+      <h3 class="title is-4 mt-4">Bridge Tasks</h3>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Bridge/SpoonOnTowel.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Spoon on Towel</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Bridge/CarrotOnPlate.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Carrot on Plate</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Bridge/StackCube.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Stack Cube</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Bridge/EggplantInBasket.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Eggplant in Basket</p>
+        </div>
+      </div>
+
+      <!-- Fractal -->
+      <h3 class="title is-4 mt-4">Fractal Tasks</h3>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Fractal/CokeCan_upright.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Coke Can</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Fractal/MoveNear.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Move Near</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Fractal/OpenDrawer.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Open Drawer</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Fractal/CloseDrawer.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Close Drawer</p>
+        </div>
+        <div class="column is-one-quarter">
+          <video controls width="100%">
+            <source src="static/videos/SimplerEnv/Fractal/PlaceInDrawer.mp4" type="video/mp4">
+          </video>
+          <p class="is-size-6">Put in Drawer</p>
+        </div>
+      </div>
+
+
+      <!-- LIBERO -->
+      <h3 class="title is-4 mt-4">LIBERO Tasks</h3>
+      <div class="columns is-multiline">
+      </div>
+
+      <!-- OOD -->
+      <h2 class="title is-3 mt-6">Robustness and Generalization Evaluation</h2>
+
+      <!-- Pick Place Order -->
+      <h3 class="title is-4 mt-4">Pick Place Order</h3>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/background.mp4" type="video/mp4"></video><p class="is-size-6">Background</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Distractors</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Lighting</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/object.mp4" type="video/mp4"></video><p class="is-size-6">Object</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/container.mp4" type="video/mp4"></video><p class="is-size-6">Container</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Occlusion</p></div>
+      </div>
+
+      <!-- Clean Restaurant Table -->
+      <h3 class="title is-4 mt-4">Clean Rest. Table</h3>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/background.mp4" type="video/mp4"></video><p class="is-size-6">Background</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Distractors</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Lighting</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/object.mp4" type="video/mp4"></video><p class="is-size-6">Object</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/container.mp4" type="video/mp4"></video><p class="is-size-6">Container</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Occlusion</p></div>
+      </div>
+
+      <!-- Place In Drawer -->
+      <h3 class="title is-4 mt-4">Put in Drawer</h3>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_bedroom.mp4" type="video/mp4"></video><p class="is-size-6">Background (bedroom)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_office.mp4" type="video/mp4"></video><p class="is-size-6">Background (office)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_brighter.mp4" type="video/mp4"></video><p class="is-size-6">Lighting (brighter)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_darker.mp4" type="video/mp4"></video><p class="is-size-6">Lighting (darker)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/texture.mp4" type="video/mp4"></video><p class="is-size-6">Texture</p></div>
+      </div>
+
+      <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
+        <img src="static/images/fig_5_ood_real.png"
+            style="width:100%; height:auto; margin-bottom:2rem;"
+            alt="OOD Real Results">
+            
+        <img src="static/images/fig_6_ood_pick_move.png"
+            style="width:100%; height:auto; margin-bottom:2rem;"
+            alt="OOD Pick and Move Results">
+
+        <img src="static/images/fig_7_ood_drawer.png"
+            style="width:100%; height:auto; margin-bottom:2rem;"
+            alt="OOD Drawer Results">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <!-- <div class="content has-text-centered">
+      <a class="icon-link"
+         href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div> -->
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website refers to <a
+              href="https://github.com/nerfies/nerfies.github.io">nerfies</a>, and
+            is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
