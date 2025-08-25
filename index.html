@@ -147,8 +147,8 @@
         <p class="has-text-justified is-size-6" style="margin-top:1rem;">
           <b>Introduction.</b>
           (a) In <i>Push Buttons</i> tasks, pre- and post-push states look nearly identical, calling for <b>temporal modeling</b>. 
-          (b) Humans handle manipulation tasks via a dual-memory system: <b>working memory (neural activity)</b> supports short-term control, while <b></b>episodic memory (hippocampus)</b> preserves long-term experience. 
-          (c) Inspired by this, MemoryVLA introduces a Perceptual–Cognitive Memory Bank that consolidates low-level perceptual details and high-level cognitive semantics for temporally aware decision making. 
+          (b) Humans handle manipulation tasks via a dual-memory system: <b>working memory (neural activity)</b> supports short-term control, while <b>episodic memory (hippocampus)</b> preserves long-term experience. 
+          (c) Inspired by this, <b>MemoryVLA</b> introduces a Perceptual-Cognitive Memory Bank that consolidates low-level perceptual details and high-level cognitive semantics for temporally aware decision making. 
           (d) MemoryVLA outperforms state-of-the-art baselines.
         </p>
       </div>
@@ -165,8 +165,8 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Temporal context is essential for robotic manipulation because such tasks are inherently non-Markovian, yet mainstream VLA models typically overlook it and struggle with long-horizon, temporally dependent tasks. 
-            Cognitive science suggests that humans rely on working memory to buffer short-lived representations for immediate control, while the <b>hippocampal</b> system preserves verbatim episodic details and semantic gist of past experience for long-term memory. 
+            Temporal context is essential for robotic manipulation because such tasks are inherently <b>non-Markovian</b>, yet mainstream VLA models typically overlook it and struggle with long-horizon, temporally dependent tasks.
+            <b>Cognitive science</b> suggests that humans rely on working memory to buffer short-lived representations for immediate control, while the <b>hippocampal</b> system preserves verbatim episodic details and semantic gist of past experience for long-term memory.
           </p>
           <p>
             Inspired by these mechanisms, we propose <b>MemoryVLA</b>, a Cognition-Memory-Action framework for long-horizon robotic manipulation.
@@ -174,9 +174,9 @@
             Working memory retrieves decision-relevant entries from the bank, adaptively fuses them with current tokens, and updates the bank by merging redundancies. Using these tokens, a memory-conditioned diffusion action expert yields temporally aware action sequences.
           </p>
           <p>
-            We evaluate MemoryVLA on 150+ simulation and real-world tasks across three robots.
-            On SimplerEnv-Bridge, Fractal, and LIBERO-5 suites, it achieves 71.9%, 72.7%, and 96.5% success rates, respectively, all outperforming state-of-the-art baselines CogACT and PI-0, with a notable +14.6 gain on Bridge. 
-            On 12 real-world tasks spanning general skills and long-horizon temporal dependencies, <b></b>MemoryVLA</b> achieves 84.0% success rate, with long-horizon tasks showing a +26 improvement over state-of-the-art baseline.
+            We evaluate MemoryVLA on <b>150+</b> simulation and real-world tasks across three robots.
+            On SimplerEnv-Bridge, Fractal, and LIBERO-5 suites, it achieves 71.9%, 72.7%, and 96.5% success rates, respectively, all outperforming state-of-the-art baselines CogACT and PI-0, with a notable <b>+14.6</b> gain on Bridge.
+            On 12 real-world tasks spanning general skills and long-horizon temporal dependencies, MemoryVLA achieves 84.0% success rate, with long-horizon tasks showing a <b>+26</b> improvement over state-of-the-art baseline.
             Moreover, MemoryVLA exhibits strong robustness and generalization under various out-of-distribution conditions.
           </p>
         </div>
@@ -205,6 +205,27 @@
   </div>
 </section>
 
+<!-- Modules -->
+<section class="hero teaser">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <h2 class="title is-3 mb-5">Module Details</h2>
+      <div style="width:75%; margin:0 auto;">
+        <img src="static/images/fig_3_modules.png"
+             style="width:100%; height:auto; margin-bottom:1rem;">
+        <p class="has-text-justified is-size-6 "
+           style="margin-top:1rem; margin-bottom:2.5rem;">
+          <b>Module details</b>
+          (a) <b>Retrieval:</b> current perceptual and cognitive tokens query the PCMB via cross-attention with timestep positional encoding to fetch relevant historical features.
+          (b) <b>Gate fusion:</b> current and retrieved tokens are adaptively fused via a gate mechanism.
+          (c) <b>Consolidation:</b> the fused tokens are updated into PCMB.
+          When PCMB reaches its capacity, we compute similarities between adjacent entries and merge the most similar pair to maintain compactness.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Experimental Setup -->
 <section class="hero teaser">
   <div class="columns is-centered">
@@ -225,7 +246,24 @@
   </div>
 </section>
 
-
+<!-- Real Robots Setup -->
+<section class="hero teaser">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <h2 class="title is-3 mb-5">Real Robots Setup</h2>
+      <div style="display:flex; justify-content:center; gap:20px; align-items:stretch;">
+        <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+          <img src="static/images/fig_14_franka.png" 
+               style="max-height:400px; width:auto; max-width:100%; object-fit:contain;">
+        </div>
+        <div style="flex:1; display:flex; align-items:center; justify-content:center;">
+          <img src="static/images/fig_15_widowx.png" 
+               style="max-height:400px; width:auto; max-width:100%; object-fit:contain;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Video -->
 <section class="hero teaser">
@@ -247,13 +285,13 @@
           <video controls width="100%">
             <source src="static/videos/Real/General/2_PutEggInPan.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Egg in Pan</p>
+          <p class="is-size-6">Put Egg in Pan</p>
         </div>
         <div class="column is-one-quarter">
           <video controls width="100%">
             <source src="static/videos/Real/General/3_PutEggInOven.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Egg in Oven</p>
+          <p class="is-size-6">Put Egg in Oven</p>
         </div>
         <div class="column is-one-quarter">
           <video controls width="100%">
@@ -306,7 +344,7 @@
           <video controls width="100%">
             <source src="static/videos/Real/Temporal/7_SeqPushButtons.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Seq. Push Buttons</p>
+          <p class="is-size-6">Sequential Push Buttons</p>
         </div>
         <div class="column is-one-quarter">
           <video controls width="100%">
@@ -336,7 +374,7 @@
           <video controls width="100%">
             <source src="static/videos/Real/Temporal/12_CleanRestaurantTable.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Clean Rest. Table</p>
+          <p class="is-size-6">Clean Restaurant Table</p>
         </div>
       </div>
 
@@ -344,19 +382,19 @@
       <h2 class="title is-3 mt-6">SimplerEnv Simulation Evaluation</h2>
 
       <!-- Bridge -->
-      <h3 class="title is-4 mt-4">Bridge Tasks</h3>
+      <h3 class="title is-4 mt-4">SimplerEnv-Bridge Tasks</h3>
       <div class="columns is-multiline">
         <div class="column is-one-quarter">
           <video controls width="100%">
             <source src="static/videos/SimplerEnv/Bridge/SpoonOnTowel.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Spoon on Towel</p>
+          <p class="is-size-6">Put Spoon on Towel</p>
         </div>
         <div class="column is-one-quarter">
           <video controls width="100%">
             <source src="static/videos/SimplerEnv/Bridge/CarrotOnPlate.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Carrot on Plate</p>
+          <p class="is-size-6">Put Carrot on Plate</p>
         </div>
         <div class="column is-one-quarter">
           <video controls width="100%">
@@ -368,18 +406,18 @@
           <video controls width="100%">
             <source src="static/videos/SimplerEnv/Bridge/EggplantInBasket.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Eggplant in Basket</p>
+          <p class="is-size-6">Put Eggplant in Basket</p>
         </div>
       </div>
 
       <!-- Fractal -->
-      <h3 class="title is-4 mt-4">Fractal Tasks</h3>
+      <h3 class="title is-4 mt-4">SimplerEnv-Fractal Tasks</h3>
       <div class="columns is-multiline">
         <div class="column is-one-quarter">
           <video controls width="100%">
             <source src="static/videos/SimplerEnv/Fractal/CokeCan_upright.mp4" type="video/mp4">
           </video>
-          <p class="is-size-6">Coke Can</p>
+          <p class="is-size-6">Pick Coke Can</p>
         </div>
         <div class="column is-one-quarter">
           <video controls width="100%">
@@ -420,46 +458,54 @@
       <h3 class="title is-4 mt-4">Pick Place Order</h3>
       <div class="columns is-multiline">
         <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/background.mp4" type="video/mp4"></video><p class="is-size-6">Background</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Distractors</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Lighting</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/object.mp4" type="video/mp4"></video><p class="is-size-6">Object</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/container.mp4" type="video/mp4"></video><p class="is-size-6">Container</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Occlusion</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
       </div>
 
       <!-- Clean Restaurant Table -->
-      <h3 class="title is-4 mt-4">Clean Rest. Table</h3>
+      <h3 class="title is-4 mt-4">Clean Restaurant Table</h3>
       <div class="columns is-multiline">
         <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/background.mp4" type="video/mp4"></video><p class="is-size-6">Background</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Distractors</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Lighting</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/object.mp4" type="video/mp4"></video><p class="is-size-6">Object</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/container.mp4" type="video/mp4"></video><p class="is-size-6">Container</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Occlusion</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
       </div>
 
       <!-- Place In Drawer -->
       <h3 class="title is-4 mt-4">Put in Drawer</h3>
       <div class="columns is-multiline">
         <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_bedroom.mp4" type="video/mp4"></video><p class="is-size-6">Background (bedroom)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_office.mp4" type="video/mp4"></video><p class="is-size-6">Background (office)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_brighter.mp4" type="video/mp4"></video><p class="is-size-6">Lighting (brighter)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_darker.mp4" type="video/mp4"></video><p class="is-size-6">Lighting (darker)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/texture.mp4" type="video/mp4"></video><p class="is-size-6">Texture</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_bedroom.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background (bedroom)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_office.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background (office)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_brighter.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (brighter)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_darker.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (darker)</p></div>
+        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/texture.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Texture</p></div>
       </div>
 
+      <!-- Quantitative Analysis -->
+      <h3 class="title is-4 mt-4">Quantitative Analysis of Real-world OOD Tests</h3>
       <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
         <img src="static/images/fig_5_ood_real.png"
             style="width:100%; height:auto; margin-bottom:2rem;"
             alt="OOD Real Results">
-            
+      </div>
+
+      <h3 class="title is-4 mt-4">Quantitative Analysis of Pick and Move OOD Tests in Simulation</h3>
+      <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
         <img src="static/images/fig_6_ood_pick_move.png"
             style="width:100%; height:auto; margin-bottom:2rem;"
             alt="OOD Pick and Move Results">
+      </div>
 
+      <h3 class="title is-4 mt-4">Quantitative Analysis of Hinge Object Manipulation OOD Tests in Simulation</h3>
+      <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
         <img src="static/images/fig_7_ood_drawer.png"
             style="width:100%; height:auto; margin-bottom:2rem;"
             alt="OOD Drawer Results">
