@@ -1,0 +1,29 @@
+# General Pretrained Models
+
+| Model                 | Description                                                                 | Input Images                                  | Action Dim | Model Size | Link |
+| -                     | -                                                                           | -                                             |-           | -          | - |
+| Dexbotic-Base         | Discrete vision-language action model (similar to OpenVLA)                  | Single View                                   | NA         | 7B         |[🤗 Hugging Face](https://huggingface.co/Dexmal/Dexbotic-Base) |
+| Dexbotic-CogACT-SArm       | Single-arm CogACT model                                                     | Single View                                   | 7D         | 7B         |[🤗 Hugging Face](https://huggingface.co/Dexmal/Dexbotic-CogACT-SArm) |
+| Dexbotic-CogACT-HArm  | Dual-arm CogACT model with multiple views input                             | Main View + Left Hand-View + Right Hand-View  | 16D        | 7B         |[🤗 Hugging Face](https://huggingface.co/Dexmal/Dexbotic-CogACT-HArm) |
+
+
+It is recommended to download the pretrained models into the following folders.
+
+```bash
+mkdir checkpoints
+cd checkpoints
+git clone https://huggingface.co/Dexmal/Dexbotic-Base Dexbotic-Base
+git clone https://huggingface.co/Dexmal/Dexbotic-CogACT-SArm Dexbotic-CogACT-SArm
+git clone https://huggingface.co/Dexmal/Dexbotic-CogACT-HArm Dexbotic-CogACT-HArm
+```
+
+## Action Dimension Description
+
+Users need to map their data to the action dimensions of the pretrained models. If the data dimension is smaller than the pretrained model dimension, padding will be conducted automatically.
+
+We recommend using the following data formats to fully utilize the pretrained models:
+
+1. **Single-arm end-effector pose**: Organize 7D action data as `[xyz + rpy + gripper]`
+2. **Single-arm joint angles**: Organize 8D action data as `[joints + gripper]`
+3. **Dual-arm end-effector pose**: Organize 14D action data as `[left_arm_xyz + left_arm_rpy + left_arm_gripper + right_arm_xyz + right_arm_rpy + right_arm_gripper]`
+4. **Dual-arm joint angles**: Organize 16D action data as `[left_arm_joints + left_arm_gripper + right_arm_joints + right_arm_gripper]`

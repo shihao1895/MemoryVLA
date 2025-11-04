@@ -1,0 +1,115 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dexbotic"
+version = "0.0.1"
+description = "Training and Serving Large Language Action Model in Dexmal"
+authors = [
+    { name = "Yucheng Zhao", email = "zyc@dexmal.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+dependencies = [
+    # Core PyTorch (must be first)
+    "torch",
+    "torchvision",
+
+    # Core ML/AI dependencies
+    "transformers==4.51.0",
+    "accelerate",
+    "peft",
+    "bitsandbytes",
+    "deepspeed==0.14.1",
+    "einops",
+    "einops-exts",
+    "tokenizers",
+    "sentencepiece",
+    "tiktoken",
+    "timm",
+
+    # Data processing and datasets
+    "datasets",
+    "numpy==1.26.4",
+    "scikit-learn",
+    "decord",
+    "av",
+    "albumentations",
+    "diffusers",
+    "botocore==1.35.66",
+    "boto3==1.35.18",
+    "megfile",
+    "easydict",
+
+    # Web framework and API
+    "fastapi",
+    "uvicorn",
+    "flask",
+    "httpx",
+    "requests",
+    "pydantic==2.10.6",
+
+    # UI and visualization
+    "gradio",
+    "gradio_client",
+    "markdown2",
+    "tabulate",
+    "tqdm",
+    "wandb",
+
+    # Utilities
+    "pyramid==1.5",
+    "numpydantic==1.6.7",
+    "protobuf",
+    "pypandoc",
+    "shortuuid",
+    "openpyxl",
+    "debugpy",
+    "loguru",
+
+    # Code formatting and linting
+    "autopep8>=2.0.0",
+    "pycodestyle>=2.10.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+
+    # Type checking
+    "mypy>=1.0.0",
+    "types-requests>=2.28.0",
+
+    # Testing
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+
+    # Pre-commit hooks
+    "pre-commit>=3.0.0"
+]
+
+[project.optional-dependencies]
+attention = [
+    "flash_attn",
+    "xformers"
+]
+
+[tool.setuptools]
+packages = ["dexbotic"]
+
+[tool.autopep8]
+max_line_length = 88
+aggressive = 1
+experimental = false
+recursive = true
+in-place = false
+jobs = 0
+pep8_passes = 2
+ignore = ["E226", "E302", "E41"]
+select = ["E", "W", "F"]
+verbose = 0
+diff = false
+exclude = ".git,__pycache__,build,dist,*.egg-info,wandb,test_data"

@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v2.0.4   # 指定版本
+    hooks:
+      - id: autopep8
+        args:
+          - --in-place
+          - --aggressive
+          - --max-line-length=88
+          - --ignore=E226,E302,E41
+          - --select=E,W,F
+          - --pep8-passes=2
+          - --exclude=.git,__pycache__,build,dist,*.egg-info,wandb,test_data
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
