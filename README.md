@@ -39,7 +39,7 @@ We release two versions of the code in separate branches:
 
 ## Contents
 
-This is MemoryVLA based on OpenVLA codebase, **if you need use dexbotic codebase**, please use [MemoryVLA+](https://github.com/shihao1895/MemoryVLA/tree/dexbotic-codebase).
+This is MemoryVLA+ based on Dexbotic codebase, **if you need use OpenVLA codebase**, please use [MemoryVLA](https://github.com/shihao1895/MemoryVLA/tree/openvla-codebase).
 
  * [**Model Zoo & Simulation Results**](#Model Zoo & Simulation Results)
  * [**Install**](#Install)
@@ -283,19 +283,6 @@ sudo apt install -y ffmpeg
 Benchmark scores tend to fluctuate, so we recommend evaluating checkpoints at regular iteration intervals and reporting the best result. Moreover, we have observed that even slight differences in Conda package versions may lead to small variations in the scores.
 
 
-
-## Citation
-
-If you find our work helpful in your research, please consider citing [our paper](https://arxiv.org/abs/2508.19236). 
-
-```bibtex
-@article{shi2025memoryvla,
-  title={MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation},
-  author={Shi, Hao and Xie, Bin and Liu, Yingfei and Sun, Lin and Liu, Fengrong and Wang, Tiancai and Zhou, Erjin and Fan, Haoqiang and Zhang, Xiangyu and Huang, Gao},
-  journal={arXiv preprint arXiv:2508.19236},
-  year={2025}
-}
-```
 
 
 
@@ -615,11 +602,20 @@ After training, please refer to the [Evaluation](#evaluation) section above to e
 
 For detailed installation instructions and troubleshooting, please refer to the official documentation at https://github.com/Dao-AILab/flash-attention.
 
-# Citaion
 
-If you find this useful in your research, please consider citing:
+
+## Citation
+
+If you find our work helpful in your research, please consider citing [our paper](https://arxiv.org/abs/2508.19236). 
 
 ```bibtex
+@article{shi2025memoryvla,
+  title={MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation},
+  author={Shi, Hao and Xie, Bin and Liu, Yingfei and Sun, Lin and Liu, Fengrong and Wang, Tiancai and Zhou, Erjin and Fan, Haoqiang and Zhang, Xiangyu and Huang, Gao},
+  journal={arXiv preprint arXiv:2508.19236},
+  year={2025}
+}
+
 @article{dexbotic,
   title={Dexbotic: Open-Source Vision-Language-Action Toolbox},
   author={Dexbotic Contributors},
@@ -628,6 +624,3 @@ If you find this useful in your research, please consider citing:
 }
 ```
 
-# Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Dexmal/dexbotic&type=date&legend=top-left)](https://www.star-history.com/#Dexmal/dexbotic&type=date&legend=top-left)
