@@ -162,6 +162,7 @@ cython_debug/
 #.idea/
 
 .vscode/
+.idea/
 wandb/
 checkpoints/
 /data/
