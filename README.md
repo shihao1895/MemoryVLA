@@ -319,9 +319,52 @@ After training, please refer to the [Evaluation](#evaluation) section above to e
 
 ## FAQ
 
-If you have any question about dexbotic framework, please refer to https://dexbotic.com/docs and https://github.com/Dexmal/dexbotic
+If you have any questions about the **Dexbotic** framework, please refer to the official documentation:
 
+- [Dexbotic Docs](https://dexbotic.com/docs)
+- [Dexbotic GitHub Repository](https://github.com/Dexmal/dexbotic)
 
+SimplerEnv and ManiSkill may involve several dependency issues during installation. Below are some common troubleshooting tips based on our experience.
+
+**(1) Vulkan / SAPIEN issues**  
+Example errors:
+ImportError: libvulkan.so.1: cannot open shared object file: No such file or directory
+Some required Vulkan extension is not present. You may not use the renderer to render, however, CPU resources will be still available.
+
+Fix:
+
+```bash
+sudo apt install -y libegl1-mesa libgl1-mesa-dev libgles2-mesa-dev
+```
+
+and reference:
+https://maniskill.readthedocs.io/en/latest/user_guide/getting_started/installation.html#troubleshooting
+
+**Note**: Check that the .json files correctly link to the .so file corresponding to your current NVIDIA driver version. Use `nvidia-smi` to check your driver version and locate the correct .so under /usr/lib/x86_64-linux-gnu/.
+
+**(2) OpenGL issues**  
+Example errors:
+ImportError: libGL.so.1: cannot open shared object file: No such file or directory
+
+Fix:
+
+```bash
+sudo apt install -y libgl1 libglib2.0-0 libglx-mesa0 libopengl0 libglu1-mesa mesa-utils
+```
+
+**(3) Video recording in SimplerEnv**
+
+```bash
+sudo apt install -y ffmpeg
+```
+
+(4) **Benchmark Score Fluctuations**
+
+Benchmark scores tend to fluctuate, so we recommend evaluating checkpoints at regular iteration intervals and reporting the best result. Moreover, we have observed that even slight differences in Conda package versions may lead to small variations in the scores.
+
+**(5) Failed to install Flash-Attention**
+
+For detailed installation instructions and troubleshooting, please refer to the official documentation at https://github.com/Dao-AILab/flash-attention.
 
 ## Citation
 
