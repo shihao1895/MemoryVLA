@@ -39,7 +39,7 @@ class MemVLATrainerConfig(_MemVLATrainerConfig):
     # Weights & Biases project name - for experiment tracking and visualization
     wandb_project: str = field(default='memvla_example')
     # Number of training epochs - adjust based on dataset size and convergence
-    num_train_epochs: int = field(default=50)
+    num_train_epochs: int = field(default=80)
     # Batch size per device - adjust based on your GPU memory
     per_device_train_batch_size: int = field(default=32)
     # Save checkpoint every N steps
@@ -89,7 +89,7 @@ class MemVLAModelConfig(_MemVLAModelConfig):
     model_name_or_path: str = field(
         default='')
     # Action model type
-    action_model_type: str = field(default='DiT-B')
+    action_model_type: str = field(default='DiT-L')
     # Output dimension of perception compression
     per_token_size: int = field(default=256)
     # Memory length

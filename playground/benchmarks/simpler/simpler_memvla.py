@@ -61,7 +61,7 @@ class SimplerMemVLAModelConfig(MemVLAModelConfig):
     # You should put the pre-trained model path here
     # NOTE: here, we use a powerful pre-trained model
     model_name_or_path: str = field(
-        default='./checkpoints/Dexbotic-Base-cont')
+        default='./checkpoints/Dexbotic-Base-Cont')
     action_model_type: str = field(default='DiT-B')
     per_token_size: int = field(default=256)
     mem_length: int = field(default=16)

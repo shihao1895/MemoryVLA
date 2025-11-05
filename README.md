@@ -9,8 +9,6 @@ This is the code for the paper "MemoryVLA: Perceptual-Cognitive Memory in Vision
 - 🔥 [2025-10-21] Our VLA codebase [Dexbotic](https://github.com/Dexmal/dexbotic) is released, it now fully integrates MemoryVLA !
 - 🔥 [2025-8-26] Our paper [MemoryVLA](https://arxiv.org/abs/2508.19236) is now on arxiv!
 
-
-
 ## Overview
 
 MemoryVLA is a Cognition-Memory-Action framework for robotic manipulation inspired by human memory systems. It builds a hippocampal-like perceptual-cognitive memory to capture the temporal dependencies essential for current decision-making, enabling long-horizon, temporally aware action generation.
@@ -21,8 +19,6 @@ We release two versions of the code in separate branches:
 
 - **[MemoryVLA](https://github.com/shihao1895/MemoryVLA/tree/openvla-codebase)**:  built upon the OpenVLA codebase.
 - **[MemoryVLA+](https://github.com/shihao1895/MemoryVLA/tree/dexbotic-codebase)**:  built upon our self-developed [Dexbotic](https://dexbotic.com) codebase, which offers higher simulation performance.
-
-
 
 ## TODO
 
@@ -35,21 +31,16 @@ We release two versions of the code in separate branches:
   - [ ] MemoryVLA+ (Dexbotic codebase)
 - [ ] Dataset Upload to HuggingFace
 
-
-
 ## Contents
 
 This is MemoryVLA+ based on Dexbotic codebase, **if you need use OpenVLA codebase**, please use [MemoryVLA](https://github.com/shihao1895/MemoryVLA/tree/openvla-codebase).
 
  * [**Model Zoo & Benchmark Results**](#Model Zoo & Benchmark Results)
  * [**Install**](#Install)
- * [**Training**](#Training)
  * [**Evaluation**](#Evaluation)
- * [**Deployment in The Real World**](#deployment-in-the-real-world)
- * [**SimplerEnv Installation FAQ**](#SimplerEnv Installation FAQ)
+ * [**Training**](#Training)
+ * [**FAQ**](#FAQ)
  * [**Citation**](#Citation)
-
-
 
 ## Model Zoo & Benchmark Results
 
@@ -87,8 +78,6 @@ This is MemoryVLA+ based on Dexbotic codebase, **if you need use OpenVLA codebas
 | Model      | PickCube | StackCube | PickSingleYCB | PickSingleEGAD | PickClutterYCB | Avg. | CKPT & Logs                                                  |
 | ---------- | -------- | --------- | ------------- | -------------- | -------------- | ---- | ------------------------------------------------------------ |
 | MemoryVLA+ | 85       | 70        | 55            | 80             | 60             | 70   | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-maniskill2) |
-
-
 
 ## Install
 
@@ -163,11 +152,9 @@ pip install ninja packaging
 pip install flash-attn --no-build-isolation
 ```
 
-
-
 ## Evaluation
 
-We provide pre-trained models for both simulation benchmarks and real-robot settings.
+We provide pre-trained models for many benchmarks. 
 Here we use the Libero pre-trained model as an example.
 
 First, you should download the pre-trained models and put it in the `checkpoints` folder.
@@ -175,7 +162,7 @@ First, you should download the pre-trained models and put it in the `checkpoints
 ```bash
 mkdir -p checkpoints/libero
 cd checkpoints/libero
-git clone https://huggingface.co/Dexmal/libero-db-cogact libero_cogact
+git clone https://huggingface.co/shihao1895/memvla-plus-libero-mix memvla-plus-libero-mix
 ```
 
 We will demonstrate two ways to evaluate the model. The first is to directly infer one sample, which is the quick way to experience the model. The other is to first deploy the model server and then use a client to get the results, which is more practical in real-world deployment.
@@ -193,7 +180,7 @@ You will expect the model to output a set of actions.
 1. Start Inference Server
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python playground/benchmarks/libero/libero_cogact.py --task inference
+CUDA_VISIBLE_DEVICES=0 python playground/benchmarks/libero/libero_goal_memvla.py --task inference
 ```
 
 2. Test Model Inference Results
@@ -221,16 +208,71 @@ docker run --gpus all --network host -v $(pwd):/workspace \
 
 **NOTE**: Due to the instability of the benchmark and diffusion process, the performance scores across different iterations can vary significantly. Please evaluate multiple checkpoints and report the best result.
 
-
-
 ## Training
 
-Before starting training, please follow the instructions in [ModelZoo.md](docs/ModelZoo.md) to set up the pre-trained models, and download the Libero dataset as described in [docs/Data.md](docs/Data.md).
+### Prepare Data
+
+We adopt the **DexData** format. For more detailed guidelines, please refer to the official documentation: [Dexbotic Data Guide](https://github.com/Dexmal/dexbotic/blob/main/docs/Data.md).
+
+| Dataset            | Link                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| SimplerEnv-Bridge  | [🤗 Hugging Face](https://huggingface.co/datasets/Dexmal/simpler) |
+| LIBERO             | [🤗 Hugging Face](https://huggingface.co/datasets/shihao1895/libero-dex) |
+| SimplerEnv-Fractal | coming soon                                                  |
+| ManiSkill2         | [🤗 Hugging Face](https://huggingface.co/datasets/Dexmal/maniskill2) |
+
+> **NOTE**: For LIBERO, we use 5 suite, include Spatial, Object, Goal, 10, 90.
+
+Please organize the data according to the following directory structure:
+
+```bash
+[Your Code Path]
+├── dexbotic
+├── docs
+├── data
+│   ├── libero
+│   │   ├── libero_10
+│   │   │   ├── video
+│   │   │   └── jsonl
+│   │   ├── libero_90
+│   │   ├── libero_goal
+│   │   ├── libero_object
+│   │   └── libero_spatial
+│   ├── maniskill2
+│   │   └── video
+│   │   └── jsonl
+│   └── simpler
+│       ├── video
+│       └── jsonl
+└── ...
+```
+
+If you want to use your own custom data, you can create a data source file in the `dexbotic/data/data_source/` directory.
+ For detailed instructions, please refer to the [Custom Data Usage Guide](https://dexbotic.com/docs/5. Use Custom Data.html#custom-data-usage-guide).
+
+### Prepare Pretrained Models
+
+| Model              | Description                             | Model Size | Link                                                         |
+| ------------------ | --------------------------------------- | ---------- | ------------------------------------------------------------ |
+| Dexbotic-Base      | Discrete VLA model (similar to OpenVLA) | 7B         | [🤗 Hugging Face](https://huggingface.co/Dexmal/Dexbotic-Base) |
+| Dexbotic-Base-Cont | Continue VLA model (similar to CogACT)  | 7B         | [🤗 Hugging Face](https://huggingface.co/shihao1895/Dexbotic-Base-Cont) |
+
+
+It is recommended to download the pretrained models into the following folders.
+
+```bash
+mkdir checkpoints
+cd checkpoints
+git clone https://huggingface.co/Dexmal/Dexbotic-Base Dexbotic-Base
+git clone https://huggingface.co/shihao1895/Dexbotic-Base-Cont
+```
+
+> **Note**: For LIBERO and ManiSkill2, please use the Dexbotic-Base pretrained models, for SimplerEnv-Bridge and Fractal, please use Dexbotic-Base-Cont, in which the action expert is also pretrained.
 
 ### Training a Model with Provided Data
 
 We use Libero as an example to demonstrate how to train a model with Dexbotic.
-The experiment configuration file for this example is located at: [`playground/benchmarks/libero/libero_cogact.py`](playground/benchmarks/libero/libero_cogact.py)
+The experiment configuration file for this example is located at: [`playground/benchmarks/libero/libero_spatial_memvla.py`](playground/benchmarks/libero/libero_spatial_memvla.py)
 
 1. Experiment Configuration
 
@@ -243,22 +285,20 @@ output_dir = [Path to save checkpoints]
 2. Launch Training
 
 ```bash
-torchrun --nproc_per_node=8 playground/benchmarks/libero/libero_cogact.py
+torchrun --nproc_per_node=8 playground/benchmarks/libero/libero_spatial_memvla.py
 ```
 > We recommend using 8 × NVIDIA A100/H100 GPUs for training.
-> If you are using 8 × RTX 4090, please use the configuration file
-> `scripts/deepspeed/zero3_offload.json` to reduce GPU memory utilization.
 
 ### Training a Model with Your Own Data
 
 1. Prepare Your Own Data
 
-Refer to  [docs/Data.md](docs/Data.md) for detailed instructions on data preparation.
+Refer to  [Custom Data Usage Guide](https://dexbotic.com/docs/5. Use Custom Data.html#custom-data-usage-guide) for detailed instructions on data preparation.
 Once created, register your dataset under `dexbotic/data/data_source`.
 
 2. Experiment Configuration
 
-Create a new experiment configuration file (based on [`playground/example_exp.py`](playground/example_exp.py)) and set the required keys:
+Create a new experiment configuration file (based on [`playground/example_memvla_exp.py`](playground/example_memvla_exp.py)) and set the required keys:
 
 ```python
 # CogActTrainerConfig
@@ -272,10 +312,14 @@ dataset_name = [Name of your registered dataset]
 3. Launch Training
 
 ```bash
-torchrun --nproc_per_node=8 playground/benchmarks/example_exp.py
+torchrun --nproc_per_node=8 playground/benchmarks/example_memvla_exp.py
 ```
 
 After training, please refer to the [Evaluation](#evaluation) section above to evaluate your model. Update the `model_name_or_path` in the inference config to your trained checkpoint, and run inference or start the inference server as described.
+
+## FAQ
+
+If you have any question about dexbotic framework, please refer to https://dexbotic.com/docs and https://github.com/Dexmal/dexbotic
 
 
 
