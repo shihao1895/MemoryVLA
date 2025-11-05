@@ -1,6 +1,16 @@
 from dexbotic.data.data_source.register import register_dataset
 
 LIBERO_DATASET = {
+    "spatial": {
+        "data_path_prefix": "./data/libero/libero_spatial/video",
+        "annotations": './data/libero/libero_spatial',
+        "frequency": 1,
+    },
+    "object": {
+        "data_path_prefix": "./data/libero/libero_object/video",
+        "annotations": './data/libero/libero_object',
+        "frequency": 1,
+    },
     "goal": {
         "data_path_prefix": "./data/libero/libero_goal/video",
         "annotations": './data/libero/libero_goal',
@@ -11,14 +21,9 @@ LIBERO_DATASET = {
         "annotations": './data/libero/libero_10',
         "frequency": 1,
     },
-    "spatial": {
-        "data_path_prefix": "./data/libero/libero_spatial/video",
-        "annotations": './data/libero/libero_spatial',
-        "frequency": 1,
-    },
-    "object": {
-        "data_path_prefix": "./data/libero/libero_object/video",
-        "annotations": './data/libero/libero_object',
+    "90": {
+        "data_path_prefix": "./data/libero/libero_90/video",
+        "annotations": './data/libero/libero_90',
         "frequency": 1,
     },
     "pi0_all": {

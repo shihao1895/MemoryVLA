@@ -125,10 +125,10 @@ class CrossTransformerBlock(nn.Module):
 
         attn_out = attn_out.transpose(1, 2).reshape(B, N, D)  # 合并头
 
-        # 残差 + LN
+        # residual + LN
         x = self.attn_norm(query + attn_out)
 
-        # FFN + 残差 + LN
+        # FFN + residual + LN
         ffn_out = self.ffn(x)
         return self.ffn_norm(x + ffn_out)
 
