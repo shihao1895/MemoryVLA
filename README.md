@@ -35,7 +35,7 @@ We release two versions of the code in separate branches:
 
 This is MemoryVLA+ based on Dexbotic codebase, **if you need use OpenVLA codebase**, please use [MemoryVLA](https://github.com/shihao1895/MemoryVLA/tree/openvla-codebase).
 
- * [**Model Zoo & Benchmark Results**](#Model Zoo & Benchmark Results)
+ * [**Model Zoo & Benchmark Results**](#Model-Zoo-&-Benchmark-Results)
  * [**Install**](#Install)
  * [**Evaluation**](#Evaluation)
  * [**Training**](#Training)
@@ -75,9 +75,9 @@ This is MemoryVLA+ based on Dexbotic codebase, **if you need use OpenVLA codebas
 
 ### Maniskill2
 
-| Model      | PickCube | StackCube | PickSingleYCB | PickSingleEGAD | PickClutterYCB | Avg. | CKPT & Logs                                                  |
-| ---------- | -------- | --------- | ------------- | -------------- | -------------- | ---- | ------------------------------------------------------------ |
-| MemoryVLA+ | 85       | 70        | 55            | 80             | 60             | 70   | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-maniskill2) |
+| Model      | Pick Cube | Stack Cube | Pick Single YCB | Pick Single EGAD | Pick Clutter YCB | Avg. | CKPT & Logs                                                  |
+| ---------- | --------- | ---------- | --------------- | ---------------- | ---------------- | ---- | ------------------------------------------------------------ |
+| MemoryVLA+ | 85        | 70         | 55              | 80               | 60               | 70   | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-maniskill2) |
 
 ## Install
 
@@ -204,9 +204,7 @@ docker run --gpus all --network host -v $(pwd):/workspace \
   bash /workspace/scripts/env_sh/libero.sh /workspace/evaluation/configs/libero/example_libero.yaml
 ```
 
-> dexbotic-benchmark also works without docker, see its documentation for further support
-
-**NOTE**: Due to the instability of the benchmark and diffusion process, the performance scores across different iterations can vary significantly. Please evaluate multiple checkpoints and report the best result.
+> **NOTE**: Due to the instability of the benchmark and diffusion process, the performance scores across different iterations can vary significantly. Please evaluate multiple checkpoints and report the best result.
 
 ## Training
 
@@ -340,7 +338,7 @@ sudo apt install -y libegl1-mesa libgl1-mesa-dev libgles2-mesa-dev
 and reference:
 https://maniskill.readthedocs.io/en/latest/user_guide/getting_started/installation.html#troubleshooting
 
-**Note**: Check that the .json files correctly link to the .so file corresponding to your current NVIDIA driver version. Use `nvidia-smi` to check your driver version and locate the correct .so under /usr/lib/x86_64-linux-gnu/.
+> **Note**: Check that the .json files correctly link to the .so file corresponding to your current NVIDIA driver version. Use `nvidia-smi` to check your driver version and locate the correct .so under /usr/lib/x86_64-linux-gnu/.
 
 **(2) OpenGL issues**  
 Example errors:
