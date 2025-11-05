@@ -155,3 +155,51 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+/* ======= Collapsible Section (Bulma风格+三角折叠) ======= */
+.collapsible-wrapper {
+  text-align: center;
+  margin: 3rem 0 1.5rem 0;
+}
+
+.collapsible {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 700;              /* 与 .title 一致 */
+  font-size: 2rem;               /* 等同于 .title.is-3 */
+  line-height: 1.25;             /* Bulma 默认行距 */
+  color: #363636;                /* Bulma 默认字体色 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  transition: color 0.2s ease-in-out;
+}
+
+.collapsible:hover {
+  color: #276ef1; /* Bulma primary 蓝 */
+}
+
+.collapsible .triangle {
+  display: inline-block;
+  font-size: 0.9em;
+  transition: transform 0.25s ease-in-out;
+}
+
+.collapsible.is-active .triangle {
+  transform: rotate(90deg);
+}
+
+.collapsible-content {
+  display: none;
+  overflow: hidden;
+  animation: fadein 0.25s ease;
+}
+
+@keyframes fadein {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}

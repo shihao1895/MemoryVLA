@@ -129,6 +129,14 @@
                   <span>Code</span>
                   </a>
               </span>
+              <!-- HuggingFace -->
+              <span class="link-block">
+                <a href="https://huggingface.co/collections/shihao1895/memoryvla"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <img src="static/images/huggingface_logo.svg" alt="Hugging Face" style="height: 1em; vertical-align: middle;">
+                  <span>Models</span>
+                  </a>
+              </span>
               <!-- Video Link. -->
               <span class="link-block">
                 <a href="https://www.bilibili.com/video/BV1nUpkzFEmd"
@@ -139,7 +147,8 @@
                   <span>Video</span>
                   </a>
               </span>
-              <!-- Video Link. -->
+              <br>
+              <!-- Talk Link. -->
               <span class="link-block">
                 <a href="https://mp.weixin.qq.com/s/m6aFuOkS-GTIxwEHro56BQ"
                    class="external-link button is-normal is-rounded is-dark">
@@ -149,7 +158,7 @@
                   <span>Talk@3D视觉工坊</span>
                   </a>
               </span>
-              <!-- Video Link. -->
+              <!-- Talk Link. -->
               <span class="link-block">
                 <a href="https://mp.weixin.qq.com/s/MNapDpvpS2zQ7zGML08rrA"
                    class="external-link button is-normal is-rounded is-dark">
@@ -226,9 +235,9 @@
              style="width:100%; height:auto; margin-bottom:1rem;">
         <p class="has-text-justified is-size-6 "
            style="margin-top:1rem; margin-bottom:2.5rem;">
-          <b>Overall architecture of MemoryVLA.</b> 
-          RGB observation and language instruction are encoded by a 7B VLM into perceptual and cognitive tokens, forming short-term working memory. 
-          The working memory queries a perceptual-cognitive memory bank (PCMB) to retrieve relevant historical context, including high-level semantics and low-level visual details, adaptively fuses it with current tokens, and consolidates the PCMB by merging the most similar neighbors. 
+          <b>Overall architecture of MemoryVLA.</b>
+          RGB observation and language instruction are encoded by a 7B VLM into perceptual and cognitive tokens, forming short-term working memory.
+          The working memory queries a perceptual-cognitive memory bank (PCMB) to retrieve relevant historical context, including high-level semantics and low-level visual details, adaptively fuses it with current tokens, and consolidates the PCMB by merging the most similar neighbors.
           The memory-augmented tokens then condition a diffusion transformer to predict a sequence of future actions.
         </p>
       </div>
@@ -284,12 +293,72 @@
       <h2 class="title is-3 mb-5">Real Robots Setup</h2>
       <div style="display:flex; justify-content:center; gap:20px; align-items:stretch;">
         <div style="flex:1; display:flex; align-items:center; justify-content:center;">
-          <img src="static/images/fig_14_franka.png" 
+          <img src="static/images/fig_14_franka.png"
                style="max-height:400px; width:auto; max-width:100%; object-fit:contain;">
         </div>
         <div style="flex:1; display:flex; align-items:center; justify-content:center;">
-          <img src="static/images/fig_15_widowx.png" 
+          <img src="static/images/fig_15_widowx.png"
                style="max-height:400px; width:auto; max-width:100%; object-fit:contain;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Performance -->
+<section class="hero teaser">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <div class="collapsible-wrapper">
+        <button class="collapsible">
+          <span class="triangle">▶</span>
+          <span>Performance</span>
+        </button>
+      </div>
+      <div class="collapsible-content">
+        <div style="width:80%; margin:0 auto;">
+          <h3 class="title is-4 mt-4">SimplerEnv-Bridge Benchmark</h3>
+          <a href="static/images/tab_1.png" target="_blank">
+            <img src="static/images/tab_1.png" alt="SimplerEnv-Bridge Benchmark"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <h3 class="title is-4 mt-4">SimplerEnv-Fractal Benchmark</h3>
+          <a href="static/images/tab_2.png" target="_blank">
+            <img src="static/images/tab_2.png" alt="SimplerEnv-Fractal Benchmark"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <h3 class="title is-4 mt-4">LIBERO Benchmark</h3>
+          <a href="static/images/tab_3.png" target="_blank">
+            <img src="static/images/tab_3.png" alt="LIBERO Benchmark"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <h3 class="title is-4 mt-4">Real World</h3>
+          <a href="static/images/tab_4.png" target="_blank">
+            <img src="static/images/tab_4.png" alt="Real World"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+
+        <!-- OOD -->
+        <h3 class="title is-4 mt-4">Real-world OOD Tests</h3>
+        <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
+          <img src="static/images/fig_5_ood_real.png"
+              style="width:100%; height:auto; margin-bottom:2rem;"
+              alt="OOD Real Results">
+        </div>
+        <h3 class="title is-4 mt-4">Pick and Move OOD Tests in Simulation</h3>
+        <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
+          <img src="static/images/fig_6_ood_pick_move.png"
+              style="width:100%; height:auto; margin-bottom:2rem;"
+              alt="OOD Pick and Move Results">
+        </div>
+
+        <h3 class="title is-4 mt-4">Hinge Object Manipulation OOD Tests in Simulation</h3>
+        <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
+          <img src="static/images/fig_7_ood_drawer.png"
+              style="width:100%; height:auto; margin-bottom:2rem;"
+              alt="OOD Drawer Results">
+        </div>
+
         </div>
       </div>
     </div>
@@ -301,409 +370,442 @@
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
       <!-- Real -->
-      <h2 class="title is-3 mt-6">Real-world Evaluation</h2>
-
-      <!-- Temporal -->
-      <h3 class="title is-4 mt-4">Long-horizon Temporal Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/Temporal/7_SeqPushButtons.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Sequential Push Buttons</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/Temporal/8_ChangeFood.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Change Food</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/Temporal/9_GuessWhere.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Guess Where</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/Temporal/10_CleanTableCount.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Clean Table &amp; Count</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/Temporal/11_PickPlaceOrder.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Pick Place Order</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/Temporal/12_CleanRestaurantTable.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Clean Restaurant Table</p>
-        </div>
+      <div class="collapsible-wrapper">
+        <button class="collapsible">
+          <span class="triangle">▶</span>
+          <span>Real-world Evaluation</span>
+        </button>
       </div>
+      <div class="collapsible-content">
+        <!-- Temporal -->
+        <h3 class="title is-4 mt-4">Long-horizon Temporal Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/Temporal/7_SeqPushButtons.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Sequential Push Buttons</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/Temporal/8_ChangeFood.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Change Food</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/Temporal/9_GuessWhere.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Guess Where</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/Temporal/10_CleanTableCount.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Clean Table &amp; Count</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/Temporal/11_PickPlaceOrder.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Pick Place Order</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/Temporal/12_CleanRestaurantTable.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Clean Restaurant Table</p>
+          </div>
+        </div>
 
-      <!-- General -->
-      <h3 class="title is-4 mt-4">General Manipulation Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/1_InsertCircle.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Insert Circle</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/2_PutEggInPan.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Put Egg in Pan</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/3_PutEggInOven.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Put Egg in Oven</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/4_StackCup.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Stack Cups</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/5_StackBlock.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Stack Blocks</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/6_PickDiverseFruits_apple.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Pick Diverse Fruits (apple)</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/6_PickDiverseFruits_banana.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Pick Diverse Fruits (banana)</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/6_PickDiverseFruits_carrot.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Pick Diverse Fruits (carrot)</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/6_PickDiverseFruits_chili.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Pick Diverse Fruits (chili)</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/Real/General/6_PickDiverseFruits_grape.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Pick Diverse Fruits (grape)</p>
+        <!-- General -->
+        <h3 class="title is-4 mt-4">General Manipulation Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/1_InsertCircle.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Insert Circle</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/2_PutEggInPan.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Put Egg in Pan</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/3_PutEggInOven.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Put Egg in Oven</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/4_StackCup.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Stack Cups</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/5_StackBlock.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Stack Blocks</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/6_PickDiverseFruits_apple.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Pick Diverse Fruits (apple)</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/6_PickDiverseFruits_banana.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Pick Diverse Fruits (banana)</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/6_PickDiverseFruits_carrot.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Pick Diverse Fruits (carrot)</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/6_PickDiverseFruits_chili.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Pick Diverse Fruits (chili)</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/Real/General/6_PickDiverseFruits_grape.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Pick Diverse Fruits (grape)</p>
+          </div>
         </div>
       </div>
 
       <!-- SimplerEnv -->
-      <h2 class="title is-3 mt-6">SimplerEnv Simulation Evaluation</h2>
-
-      <!-- Bridge -->
-      <h3 class="title is-4 mt-4">SimplerEnv-Bridge Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Bridge/SpoonOnTowel.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Put Spoon on Towel</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Bridge/CarrotOnPlate.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Put Carrot on Plate</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Bridge/StackCube.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Stack Cube</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Bridge/EggplantInBasket.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Put Eggplant in Basket</p>
-        </div>
+      <div class="collapsible-wrapper">
+        <button class="collapsible">
+          <span class="triangle">▶</span>
+          <span>SimplerEnv Simulation Evaluation</span>
+        </button>
       </div>
+      <div class="collapsible-content">
+        <!-- Bridge -->
+        <h3 class="title is-4 mt-4">SimplerEnv-Bridge Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Bridge/SpoonOnTowel.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Put Spoon on Towel</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Bridge/CarrotOnPlate.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Put Carrot on Plate</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Bridge/StackCube.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Stack Cube</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Bridge/EggplantInBasket.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Put Eggplant in Basket</p>
+          </div>
+        </div>
 
-      <!-- Fractal -->
-      <h3 class="title is-4 mt-4">SimplerEnv-Fractal Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Fractal/CokeCan_upright.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Pick Coke Can</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Fractal/MoveNear.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Move Near</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Fractal/OpenDrawer.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Open Drawer</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Fractal/CloseDrawer.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Close Drawer</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/SimplerEnv/Fractal/PlaceInDrawer.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Put in Drawer</p>
+        <!-- Fractal -->
+        <h3 class="title is-4 mt-4">SimplerEnv-Fractal Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Fractal/CokeCan_upright.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Pick Coke Can</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Fractal/MoveNear.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Move Near</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Fractal/OpenDrawer.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Open Drawer</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Fractal/CloseDrawer.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Close Drawer</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/SimplerEnv/Fractal/PlaceInDrawer.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Put in Drawer</p>
+          </div>
         </div>
       </div>
 
       <!-- LIBERO -->
-      <h2 class="title is-3 mt-6">LIBERO Simulation Evaluation</h2>
-
-      <!-- LIBERO-Spatial -->
-      <h3 class="title is-4 mt-4">LIBERO-Spatial Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_cabinet_on_plate.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Bowl: Cabinet → Plate</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_cookie_box_on_plate.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Bowl: Cookie Box → Plate</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_drawer_on_plate.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Bowl: Drawer → Plate</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_stove_on_plate.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Bowl: Stove → Plate</p>
-        </div>
+      <div class="collapsible-wrapper">
+        <button class="collapsible">
+          <span class="triangle">▶</span>
+          <span>LIBERO Simulation Evaluation</span>
+        </button>
       </div>
+      <div class="collapsible-content">
+        <!-- LIBERO-Spatial -->
+        <h3 class="title is-4 mt-4">LIBERO-Spatial Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_cabinet_on_plate.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Bowl: Cabinet → Plate</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_cookie_box_on_plate.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Bowl: Cookie Box → Plate</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_drawer_on_plate.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Bowl: Drawer → Plate</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_stove_on_plate.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Bowl: Stove → Plate</p>
+          </div>
+        </div>
 
-      <!-- LIBERO-Object -->
-      <h3 class="title is-4 mt-4">LIBERO-Object Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Object/alphabet_soup_in_basket.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Alphabet Soup in Basket</p>
+        <!-- LIBERO-Object -->
+        <h3 class="title is-4 mt-4">LIBERO-Object Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Object/alphabet_soup_in_basket.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Alphabet Soup in Basket</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Object/chocolate_in_basket.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Chocolate in Basket</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Object/orange_juice_in_basket.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Orange Juice in Basket</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Object/tomato_sauce_in_basket.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Tomato Sauce in Basket</p>
+          </div>
         </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Object/chocolate_in_basket.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Chocolate in Basket</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Object/orange_juice_in_basket.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Orange Juice in Basket</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Object/tomato_sauce_in_basket.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Tomato Sauce in Basket</p>
-        </div>
-      </div>
 
-      <!-- LIBERO-Goal -->
-      <h3 class="title is-4 mt-4">LIBERO-Goal Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Goal/bowl_in_top_drawer.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Bowl in Top Drawer</p>
+        <!-- LIBERO-Goal -->
+        <h3 class="title is-4 mt-4">LIBERO-Goal Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Goal/bowl_in_top_drawer.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Bowl in Top Drawer</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Goal/open_middle_drawer.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Open Middle Drawer</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Goal/turn_on_stove.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Turn On Stove</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Goal/wine_bottle_on_rack.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Wine Bottle on Rack</p>
+          </div>
         </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Goal/open_middle_drawer.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Open Middle Drawer</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Goal/turn_on_stove.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Turn On Stove</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Goal/wine_bottle_on_rack.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Wine Bottle on Rack</p>
-        </div>
-      </div>
 
-      <!-- LIBERO-Long -->
-      <h3 class="title is-4 mt-4">LIBERO-Long Tasks</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Long/alphabet_soup_and_tomato_sauce_in_basket.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Alphabet Soup &amp; Tomato Sauce in Basket</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Long/bowl_in_bottom_drawer_and_close.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Bowl in Bottom Drawer &amp; Close</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Long/turn_on_stove_and_put_moka_pot.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Turn On Stove &amp; Put Moka Pot</p>
-        </div>
-        <div class="column is-one-quarter">
-          <video controls width="100%">
-            <source src="static/videos/LIBERO/LIBERO-Long/yellow_white_mug_in_microwave_and_close.mp4" type="video/mp4">
-          </video>
-          <p class="is-size-6">Yellow/White Mug in Microwave &amp; Close</p>
+        <!-- LIBERO-Long -->
+        <h3 class="title is-4 mt-4">LIBERO-Long Tasks</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Long/alphabet_soup_and_tomato_sauce_in_basket.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Alphabet Soup &amp; Tomato Sauce in Basket</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Long/bowl_in_bottom_drawer_and_close.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Bowl in Bottom Drawer &amp; Close</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Long/turn_on_stove_and_put_moka_pot.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Turn On Stove &amp; Put Moka Pot</p>
+          </div>
+          <div class="column is-one-quarter">
+            <video controls width="100%">
+              <source src="static/videos/LIBERO/LIBERO-Long/yellow_white_mug_in_microwave_and_close.mp4" type="video/mp4">
+            </video>
+            <p class="is-size-6">Yellow/White Mug in Microwave &amp; Close</p>
+          </div>
         </div>
       </div>
 
       <!-- OOD -->
-      <h2 class="title is-3 mt-6">Robustness and Generalization Evaluation</h2>
-
-      <!-- Pick Place Order -->
-      <h3 class="title is-4 mt-4">Pick Place Order</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
+      <div class="collapsible-wrapper">
+        <button class="collapsible">
+          <span class="triangle">▶</span>
+          <span>Robustness and Generalization Evaluation</span>
+        </button>
       </div>
+      <div class="collapsible-content">
+        <!-- Pick Place Order -->
+        <h3 class="title is-4 mt-4">Pick Place Order</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
+        </div>
 
-      <!-- Clean Restaurant Table -->
-      <h3 class="title is-4 mt-4">Clean Restaurant Table</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
+        <!-- Clean Restaurant Table -->
+        <h3 class="title is-4 mt-4">Clean Restaurant Table</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
+        </div>
+
+        <!-- Place In Drawer -->
+        <h3 class="title is-4 mt-4">Put in Drawer</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_bedroom.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background (bedroom)</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_office.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background (office)</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_brighter.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (brighter)</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_darker.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (darker)</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/texture.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Texture</p></div>
+        </div>
       </div>
-
-      <!-- Place In Drawer -->
-      <h3 class="title is-4 mt-4">Put in Drawer</h3>
-      <div class="columns is-multiline">
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_bedroom.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background (bedroom)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/background_office.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background (office)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_brighter.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (brighter)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_darker.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (darker)</p></div>
-        <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/texture.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Texture</p></div>
-      </div>
-
-      <!-- Quantitative Analysis -->
-      <h3 class="title is-4 mt-4">Quantitative Analysis of Real-world OOD Tests</h3>
-      <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
-        <img src="static/images/fig_5_ood_real.png"
-            style="width:100%; height:auto; margin-bottom:2rem;"
-            alt="OOD Real Results">
-      </div>
-
-      <h3 class="title is-4 mt-4">Quantitative Analysis of Pick and Move OOD Tests in Simulation</h3>
-      <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
-        <img src="static/images/fig_6_ood_pick_move.png"
-            style="width:100%; height:auto; margin-bottom:2rem;"
-            alt="OOD Pick and Move Results">
-      </div>
-
-      <h3 class="title is-4 mt-4">Quantitative Analysis of Hinge Object Manipulation OOD Tests in Simulation</h3>
-      <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
-        <img src="static/images/fig_7_ood_drawer.png"
-            style="width:100%; height:auto; margin-bottom:2rem;"
-            alt="OOD Drawer Results">
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- Deep Exploration -->
+<!-- Further Analysis -->
 <section class="hero teaser">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <h2 class="title is-3 mt-6 mb-5">Deep Exploration</h2>
-
-      <!-- 统一与前文一致的内容宽度 -->
-      <div style="width:80%; margin:0 auto;">
-        <a href="static/images/deep_exploration_1.png" target="_blank">
-          <img src="static/images/deep_exploration_1.png" alt="Deep Exploration 1"
-               style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-        </a>
-        <a href="static/images/deep_exploration_2.png" target="_blank">
-          <img src="static/images/deep_exploration_2.png" alt="Deep Exploration 2"
-               style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-        </a>
-        <a href="static/images/deep_exploration_3.png" target="_blank">
-          <img src="static/images/deep_exploration_3.png" alt="Deep Exploration 3"
-               style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-        </a>
-        <a href="static/images/deep_exploration_4.png" target="_blank">
-          <img src="static/images/deep_exploration_4.png" alt="Deep Exploration 4"
-               style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-        </a>
-        <a href="static/images/deep_exploration_5.png" target="_blank">
-          <img src="static/images/deep_exploration_5.png" alt="Deep Exploration 5"
-               style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-        </a>
-        <a href="static/images/deep_exploration_6.png" target="_blank">
-          <img src="static/images/deep_exploration_6.png" alt="Deep Exploration 6"
-               style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-        </a>
-        <a href="static/images/deep_exploration_7.png" target="_blank">
-          <img src="static/images/deep_exploration_7.png" alt="Deep Exploration 7"
-               style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-        </a>
-        <a href="static/images/deep_exploration_8.png" target="_blank">
-          <img src="static/images/deep_exploration_8.png" alt="Deep Exploration 8"
-               style="width:100%; height:auto; margin-bottom:0;" loading="lazy">
-        </a>
+      <div class="collapsible-wrapper">
+        <button class="collapsible">
+          <span class="triangle">▶</span>
+          <span>Further Analysis</span>
+        </button>
+      </div>
+      <div class="collapsible-content">
+        <div style="width:80%; margin:0 auto;">
+          <a href="static/images/deep_exploration_1.png" target="_blank">
+            <img src="static/images/deep_exploration_1.png" alt="Deep Exploration 1"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <a href="static/images/deep_exploration_2.png" target="_blank">
+            <img src="static/images/deep_exploration_2.png" alt="Deep Exploration 2"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <a href="static/images/deep_exploration_3.png" target="_blank">
+            <img src="static/images/deep_exploration_3.png" alt="Deep Exploration 3"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <a href="static/images/deep_exploration_4.png" target="_blank">
+            <img src="static/images/deep_exploration_4.png" alt="Deep Exploration 4"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <a href="static/images/deep_exploration_5.png" target="_blank">
+            <img src="static/images/deep_exploration_5.png" alt="Deep Exploration 5"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <a href="static/images/deep_exploration_6.png" target="_blank">
+            <img src="static/images/deep_exploration_6.png" alt="Deep Exploration 6"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <a href="static/images/deep_exploration_7.png" target="_blank">
+            <img src="static/images/deep_exploration_7.png" alt="Deep Exploration 7"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <a href="static/images/deep_exploration_8.png" target="_blank">
+            <img src="static/images/deep_exploration_8.png" alt="Deep Exploration 8"
+                 style="width:100%; height:auto; margin-bottom:0;" loading="lazy">
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Future Outlook -->
+<section class="hero teaser">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <div class="collapsible-wrapper">
+        <button class="collapsible">
+          <span class="triangle">▶</span>
+          <span>Future Outlook</span>
+        </button>
+      </div>
+      <div class="collapsible-content">
+        <div style="width:80%; margin:0 auto;">
+          <h3 class="title is-4 mt-4">Memory Reflection</h3>
+          <a href="static/images/future_1.png" target="_blank">
+            <img src="static/images/future_1.png" alt="Future Outlook 1"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+          <h3 class="title is-4 mt-4">Lifelong Memory</h3>
+          <a href="static/images/future_2.png" target="_blank">
+            <img src="static/images/future_2.png" alt="Future Outlook 2"
+                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
