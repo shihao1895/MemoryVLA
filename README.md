@@ -44,6 +44,8 @@ This is MemoryVLA+ based on Dexbotic codebase, **if you need use OpenVLA codebas
 
 ## Model Zoo & Benchmark Results
 
+> All datasets use only third-person RGB and language, without using wrist-view images or state.
+
 ### Bridge
 
 | Model      | Spoon | Carrot | Cube | Eggplant | Avg. | CKPT & Logs                                                  |
@@ -77,11 +79,11 @@ This is MemoryVLA+ based on Dexbotic codebase, **if you need use OpenVLA codebas
 
 | Model      | Pick Cube | Stack Cube | Pick Single YCB | Pick Single EGAD | Pick Clutter YCB | Avg. | CKPT & Logs                                                  |
 | ---------- | --------- | ---------- | --------------- | ---------------- | ---------------- | ---- | ------------------------------------------------------------ |
-| MemoryVLA+ | 85        | 70         | 55              | 80               | 60               | 70   | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-maniskill2) |
+| MemoryVLA+ | 85        | 75         | 60              | 85               | 45               | 70   | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-maniskill2) |
 
 ## Install
 
-#### 🐳 Docker (Recommended)
+### 🐳 Docker (Recommended)
 
 
 We strongly recommend using the docker as a unified, consistent, and reproducible environment for training and deployment. This approach not only ensures reliability across workflows but also minimizes potential issues arising from CUDA version differences and Python dependency conflicts.
@@ -119,7 +121,7 @@ conda activate dexbotic
 pip install -e .
 ```
 
-#### Conda Installation
+### Conda Installation
 
 0. Prerequisites
 
