@@ -1,12 +1,16 @@
 # MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation
-This is the code for the paper "MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation".
+[Hao Shi](https://shihao1895.github.io/), [Bin Xie](https://xb534.github.io/), [Yingfei Liu](https://scholar.google.com/citations?user=pF9KA1sAAAAJ), [Lin Sun](https://github.com/linsun449), [Fengrong Liu](https://shihao1895.github.io/MemoryVLA/) [Tiancai Wang](https://scholar.google.com/citations?user=YI0sRroAAAAJ), [Erjin Zhou](https://scholar.google.com/citations?user=k2ziPUsAAAAJ), [Haoqiang Fan](https://scholar.google.com/citations?user=bzzBut4AAAAJ), [Xiangyu Zhang](https://scholar.google.com/citations?user=yuB-cfoAAAAJ), [Gao Huang](https://scholar.google.com/citations?user=-P9LwcgAAAAJ)
+
+Tsinghua University, Dexmal, MEGVII, TJU, HiT, StepFun
+
+> This is the code for the paper "MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation".
 
 ### 🏠[Project Page](https://shihao1895.github.io/MemoryVLA/) | 📑[Paper](https://arxiv.org/abs/2508.19236) | 🤗[Models & Data](https://huggingface.co/collections/shihao1895/memoryvla)
 
 ## 🌟 News
 
 - 🔥 [2025-11-5] The code of [MemoryVLA](https://arxiv.org/abs/2508.19236) is released! (Both MemoryVLA and MemoryVLA+)
-- 🔥 [2025-10-21] Our VLA codebase [Dexbotic](https://github.com/Dexmal/dexbotic) is released, it now fully integrates MemoryVLA !
+- 🔥 [2025-10-20] Our VLA codebase [Dexbotic](https://github.com/Dexmal/dexbotic) is released, it now fully integrates MemoryVLA !
 - 🔥 [2025-8-26] Our paper [MemoryVLA](https://arxiv.org/abs/2508.19236) is now on arxiv!
 
 ## Overview
@@ -26,10 +30,8 @@ We release two versions of the code in separate branches:
   - [x] MemoryVLA (OpenVLA codebase)
   - [x] MemoryVLA+ (Dexbotic codebase)
 
-- [ ] Model Weights Release (We are accelerating the upload process)
-  - [ ] MemoryVLA (OpenVLA codebase)
-  - [ ] MemoryVLA+ (Dexbotic codebase)
-- [ ] Dataset Upload to HuggingFace
+- [x] Model Weights Release
+- [x] Dataset Upload to HuggingFace
 
 ## Contents
 
