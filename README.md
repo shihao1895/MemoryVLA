@@ -26,7 +26,9 @@ We release two versions of the code in separate branches:
 
 ## TODO
 
-- [x] Code Release (currently in a preview stage and will be further improved)
+All components are now available, and we will continue to refine and improve the code.
+
+- [x] Code Release
   - [x] MemoryVLA (OpenVLA codebase)
   - [x] MemoryVLA+ (Dexbotic codebase)
 
