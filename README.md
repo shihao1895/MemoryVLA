@@ -101,30 +101,24 @@ We strongly recommend using the docker as a unified, consistent, and reproducibl
 
 + Ubuntu 20.04 or 22.04
 
-+ NVIDIA GPU: RTX 4090 / A100 / H100 (8 GPUs recommended for training; 1 GPU for deployment)
++ NVIDIA GPU: A100 / H100 (8 GPUs recommended for training; 1 GPU for deployment)
 
 + NVIDIA Docker installed
 
-1. Step 1: Clone the Repository
-
-```bash
-git clone https://github.com/Dexmal/dexbotic.git
-```
-
-2. Step 2: Start Docker
+1. Step 1: Start Docker
 
 ```bash
 docker run -it --rm --gpus all \
-  -v /path/to/dexbotic:/dexbotic \
-  dexmal/dexbotic \
+  -v /path/to/memoryvla-dexbotic:/memvla_db \
+  namespace/memvla_db \
   bash
 ```
 
-3. Step 3: Activate Dexbotic Environment
+2. Step 2: Activate Dexbotic Environment
 
 ```bash
-cd /dexbotic
-conda activate dexbotic
+cd /memvla_db
+conda activate memvla_db
 pip install -e .
 ```
 
@@ -134,26 +128,20 @@ pip install -e .
 
 + Ubuntu 20.04 or 22.04
 
-+ NVIDIA GPU: RTX 4090 / A100 / H100 (8 GPUs recommended for training; 1 GPU for deployment)
++ NVIDIA GPU: A100 / H100 (8 GPUs recommended for training; 1 GPU for deployment)
 
 + CUDA 11.8 (tested; other versions may also work)
 
 + Anaconda
 
-1. Step 1: Clone the Repository
+1. Step 1: Install Dependencies
 
 ```bash
-git clone https://github.com/Dexmal/dexbotic.git
-```
-
-2. Step 2: Install Dependencies
-
-```bash
-conda create -n dexbotic python=3.10 -y
-conda activate dexbotic
+conda create -n memvla_db python=3.10 -y
+conda activate memvla_db
 
 pip install torch==2.2.2 torchvision==0.17.2 xformers --index-url https://download.pytorch.org/whl/cu118
-cd dexbotic
+cd memvla_db
 pip install -e .
 
 # Install FlashAttention
@@ -179,7 +167,7 @@ We will demonstrate two ways to evaluate the model. The first is to directly inf
 ### Inference One Sample
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 python playground/benchmarks/libero/libero_cogact.py --task inference_single --image_path test_data/libero_test.png --prompt 'What action should the robot take to put both moka pots on the stove?'
+CUDA_VISIBLE_DEVICES=0 python playground/benchmarks/libero/libero_goal_memvla.py --task inference_single --image_path test_data/libero_test.png --prompt 'What action should the robot take to put both moka pots on the stove?'
 ```
 
 You will expect the model to output a set of actions.
@@ -209,7 +197,7 @@ Set up the [dexbotic-benchmark](https://github.com/Dexmal/dexbotic-benchmark.git
 ```bash
 cd dexbotic-benchmark
 docker run --gpus all --network host -v $(pwd):/workspace \
-  dexmal/dexbotic_benchmark \
+  namespace/dexbotic_benchmark \
   bash /workspace/scripts/env_sh/libero.sh /workspace/evaluation/configs/libero/example_libero.yaml
 ```
 
@@ -392,4 +380,3 @@ If you find our work helpful in your research, please consider citing [our paper
   year={2025}
 }
 ```
-
