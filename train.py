@@ -78,7 +78,8 @@ class TrainConfig:
     fusion_type: str = 'gate' # Memory fusion type, chose from ['gate', 'add']
     consolidate_type: str = 'tome' # Memory consolidate type, chose from ['fifo', 'tome']
     update_fused: bool = False # Whether to update fused memory
-
+    load_wrist: bool = False
+    load_bi_wrist: bool = False
 
     def __post_init__(self) -> None:
         """Lift optimization parameters from `self.vla` for ease of use =>> validate on `expected_world_size`"""
@@ -220,6 +221,8 @@ def train(cfg: TrainConfig) -> None:
         future_action_window_size=cfg.future_action_window_size,
         dataloader_type=cfg.dataloader_type,
         group_size=cfg.group_size,
+        load_wrist=cfg.load_wrist,
+        load_bi_wrist=cfg.load_bi_wrist,
     )
 
     # Save dataset statistics for de-normalization at inference time

@@ -24,7 +24,7 @@ class MemVLAService:
         unnorm_key: str = None,
         image_size: list[int] = [224, 224],
         cfg_scale: float = 1.5,
-        num_ddim_steps: int = 10, 
+        num_ddim_steps: int = 10,
         use_ddim: bool = True,
         use_bf16: bool = False,
         action_ensemble: bool = True,
@@ -52,13 +52,13 @@ class MemVLAService:
           load_for_training=False,
           **kwargs,
         )
-        self.vla = self.vla.to("cuda").eval()
-        if use_bf16:
-            print("Using bfloat16 inference mode (auto-conversion for all modules).")
-            self.vla = self.vla.to(torch.bfloat16)
-        else:
-            print("Using standard float32 inference mode.")
-            self.vla = self.vla.to(torch.float32)
+        device = torch.device("cuda")
+        dtype = torch.bfloat16 if use_bf16 else torch.float32
+
+        self.vla = self.vla.to(device).to(dtype).eval()
+        print(f"Model loaded to {device} with dtype {dtype}.")
+
+        torch.cuda.empty_cache()
 
         self.cfg_scale = cfg_scale
 
@@ -85,6 +85,7 @@ class MemVLAService:
     def step(
         self,
         image: str,
+        image_wrist: str = None,
         task_description: str = None,
         episode_first_frame: str = 'False',
         *args, **kwargs,
@@ -105,6 +106,10 @@ class MemVLAService:
             self.reset()
 
         image: Image.Image = Image.open(image)
+        if image_wrist is not None:
+            image_wrist: Image.Image = Image.open(image_wrist)
+        else:
+            image_wrist = None
 
         # [IMPORTANT!]: Please process the input images here in exactly the same way as the images
         # were processed during finetuning to ensure alignment between inference and training.
@@ -113,15 +118,26 @@ class MemVLAService:
 
         # save resized image for debugging
         resized_image.save("resized_image.png")
+
+        if image_wrist is not None:
+            resized_image_wrist = resize_image(image_wrist, size=self.image_size)
+            resized_image_wrist.save("resized_image_wrist.png")
+        else:
+            resized_image_wrist = None
+
         unnormed_actions, normalized_actions = self.vla.predict_action(
-            image=resized_image, 
+            image=resized_image,
+            image_wrist=resized_image_wrist,
             instruction=task_description,
             unnorm_key=self.unnorm_key,
-            cfg_scale=self.cfg_scale, 
-            use_ddim=self.use_ddim, 
+            cfg_scale=self.cfg_scale,
+            use_ddim=self.use_ddim,
             num_ddim_steps=self.num_ddim_steps,
             episode_first_frame=episode_first_frame,
         )
+
+        unnormed_actions[:, 6] = np.clip(unnormed_actions[:, 6], -1, 1)
+        unnormed_actions[:, 6] = np.where(unnormed_actions[:, 6] < 0.5, 0, 1)
 
         if self.action_ensemble:
             unnormed_actions = self.action_ensembler.ensemble_action(unnormed_actions)
@@ -150,7 +166,7 @@ class MemVLAService:
         return action
 
 
-# [IMPORTANT!]: Please modify the image processing code here to ensure that the input images  
+# [IMPORTANT!]: Please modify the image processing code here to ensure that the input images
 # are handled in exactly the same way as during the finetuning phase.
 # Make sure, as much as possible, that the gripper is visible in the processed images.
 def resize_image(image: Image, size=(224, 224), shift_to_left=0):
@@ -161,11 +177,11 @@ def resize_image(image: Image, size=(224, 224), shift_to_left=0):
     image = image.crop((left_margin, 0, left_margin + h, h))
 
     image = image.resize(size, resample=Image.LANCZOS)
-    
+
     image = scale_and_resize(image, target_size=(224, 224), scale=0.9, margin_w_ratio=0.5, margin_h_ratio=0.5)
     return image
 
-# Here the image is first center cropped and then resized back to its original size 
+# Here the image is first center cropped and then resized back to its original size
 # because random crop data augmentation was used during finetuning.
 def scale_and_resize(image : Image, target_size=(224, 224), scale=0.9, margin_w_ratio=0.5, margin_h_ratio=0.5):
     w, h = image.size
@@ -234,6 +250,11 @@ def inference():
         return jsonify({'error': 'No image provided'}), 400
     image = request.files['image']
 
+    if 'image_wrist' in request.files:
+        image_wrist = request.files['image_wrist']
+    else:
+        image_wrist = None
+
     # Check if text is provided
     if 'text' not in request.form:
         return jsonify({'error': 'No text provided'}), 400
@@ -249,6 +270,13 @@ def inference():
         image.save(temp_image.name)
         temp_image_path = temp_image.name
 
+    with tempfile.NamedTemporaryFile(delete=False) as temp_image_wrist:
+        if image_wrist is not None:
+            image_wrist.save(temp_image_wrist.name)
+            temp_image_wrist_path = temp_image_wrist.name
+        else:
+            temp_image_wrist_path = None
+
     # Construct input query and prepare for inference
     input_query = {
         'task_description': query,
@@ -256,21 +284,10 @@ def inference():
     }
 
     # Run inference
-    answer = inferencer.step(temp_image_path, **input_query)
+    answer = inferencer.step(temp_image_path, temp_image_wrist_path, **input_query)
     print(answer)
 
-    # Convert action array to string based on different modes
-    if inferencer.action_ensemble:
-        # For action ensemble mode, directly convert the action list
-        action_str = ' '.join([str(x) for x in answer])
-    elif inferencer.action_chunking:
-        # For action chunking mode, convert the chunked actions
-        action_str = ';'.join([' '.join([str(x) for x in chunk]) for chunk in answer])
-    else:
-        # For single action mode
-        action_str = ' '.join([str(x) for x in answer])
-
-    return jsonify({'response': action_str})
+    return jsonify({'response': answer})
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=False, port=args.port)

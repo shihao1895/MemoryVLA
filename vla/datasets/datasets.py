@@ -35,6 +35,8 @@ class RLDSBatchTransform:
     image_transform: ImageTransform
     prompt_builder_fn: Type[PromptBuilder]
     predict_stop_token: bool = True
+    load_wrist: bool = False
+    load_bi_wrist:bool = False
 
     def __call__(self, rlds_batch: Dict[str, Any]) -> Dict[str, Any]:
         """Converts a RLDS batch to the format expected by the OpenVLA collator/models."""
@@ -83,7 +85,7 @@ class RLDSBatchTransform:
 
         timesteps = rlds_batch['observation']['timestep']
 
-        return dict(pixel_values=pixel_values,
+        data = dict(pixel_values=pixel_values,
                     input_ids=input_ids,
                     labels=labels,
                     dataset_name=dataset_name,
@@ -91,7 +93,55 @@ class RLDSBatchTransform:
                     action_masks=action_mask,
                     timesteps=timesteps,
                     episode_ids=None,
+                    lang=lang,
                     )
+
+        if self.load_bi_wrist:
+            left_wrist_pixels = []
+            right_wrist_pixels = []
+            for k in rlds_batch["observation"].keys():
+                if "left_wrist" in k:
+                    img_left_wrist = Image.fromarray(rlds_batch["observation"][k][0])
+                    pixel_values_left_wrist = self.image_transform(img_left_wrist)
+                    left_wrist_pixels.append(pixel_values_left_wrist)
+                if "right_wrist" in k:
+                    img_right_wrist = Image.fromarray(rlds_batch["observation"][k][0])
+                    pixel_values_right_wrist = self.image_transform(img_right_wrist)
+                    right_wrist_pixels.append(pixel_values_right_wrist)
+            if isinstance(left_wrist_pixels[0], dict):
+                pixel_values_left_wrist = {
+                    k: torch.cat([p[k] for p in left_wrist_pixels], dim=0)
+                    for k in left_wrist_pixels[0].keys()
+                }
+                pixel_values_right_wrist = {
+                    k: torch.cat([p[k] for p in right_wrist_pixels], dim=0)
+                    for k in right_wrist_pixels[0].keys()
+                }
+            else:
+                pixel_values_left_wrist = torch.cat(left_wrist_pixels, dim=0)
+                pixel_values_right_wrist = torch.cat(right_wrist_pixels, dim=0)
+
+            data["pixel_values_left_wrist"] = pixel_values_left_wrist
+            data["pixel_values_right_wrist"] = pixel_values_right_wrist
+
+        elif self.load_wrist:
+            all_wrist_pixels = []
+            for k in rlds_batch["observation"].keys():
+                if "wrist" in k:
+                    img_wrist = Image.fromarray(rlds_batch["observation"][k][0])
+                    pixel_values_wrist = self.image_transform(img_wrist)
+                    all_wrist_pixels.append(pixel_values_wrist)
+            if isinstance(all_wrist_pixels[0], dict):
+                pixel_values_wrist = {
+                    k: torch.cat([p[k] for p in all_wrist_pixels], dim=0)
+                    for k in all_wrist_pixels[0].keys()
+                }
+            else:
+                pixel_values_wrist = torch.cat(all_wrist_pixels, dim=0)
+
+            data["pixel_values_wrist"] = pixel_values_wrist
+
+        return data
 
 
 class RLDSDataset(IterableDataset):
@@ -108,6 +158,8 @@ class RLDSDataset(IterableDataset):
         load_all_data_for_training: bool = True,
         load_depth=False,
         load_proprio=False,
+        load_wrist=False,
+        load_bi_wrist=False,
     ) -> None:
         """Lightweight wrapper around RLDS TFDS Pipeline for use with PyTorch/OpenVLA Data Loaders."""
         self.data_root_dir, self.data_mix, self.batch_transform = data_root_dir, data_mix, batch_transform
@@ -120,10 +172,17 @@ class RLDSDataset(IterableDataset):
             mixture_spec = [(self.data_mix, 1.0)]
 
         # fmt: off
+        if load_bi_wrist:
+            load_camera_views = ("primary", "left_wrist", "right_wrist")
+        elif load_wrist:
+            load_camera_views = ("primary", "wrist")
+        else:
+            load_camera_views = ("primary",)
+
         per_dataset_kwargs, weights = get_oxe_dataset_kwargs_and_weights(
             self.data_root_dir,
             mixture_spec,
-            load_camera_views=("primary",),
+            load_camera_views=load_camera_views,
             load_depth=load_depth,
             load_proprio=load_proprio,
             load_language=True,

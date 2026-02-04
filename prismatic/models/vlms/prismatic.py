@@ -323,6 +323,8 @@ class PrismaticVLM(VLM):
         return_dict: Optional[bool] = None,
         multimodal_indices: Optional[torch.LongTensor] = None,
         proprio_feat: Optional[torch.Tensor] = None,
+        load_wrist: bool = False,
+        load_bi_wrist: bool = False,
     ) -> CausalLMOutputWithPast:
         """Run a forward pass through the VLM, returning a CausalLMOutputWithPast instance (contains loss)."""
 
@@ -365,17 +367,63 @@ class PrismaticVLM(VLM):
                 return_dict=return_dict,
             )
 
-        # Run Visual Feature Extraction
-        with torch.set_grad_enabled(self.vision_backbone_requires_grad):
-            if isinstance(pixel_values, dict):
-                patch_features = self.vision_backbone({k: pixel_values[k][multimodal_indices] for k in pixel_values})
-            else:
-                patch_features = self.vision_backbone(pixel_values[multimodal_indices])
+        if load_bi_wrist:
+            # Run Visual Feature Extraction
+            with torch.set_grad_enabled(self.vision_backbone_requires_grad):
+                if isinstance(pixel_values, dict):
+                    patch_features = self.vision_backbone(
+                        {k: pixel_values[k][multimodal_indices][:, :3] for k in pixel_values})
+                    patch_features_wrist_left = self.vision_backbone(
+                        {k: pixel_values[k][multimodal_indices][:, 3:6] for k in pixel_values})
+                    patch_features_wrist_right = self.vision_backbone(
+                        {k: pixel_values[k][multimodal_indices][:, 6:9] for k in pixel_values})
+                else:
+                    patch_features = self.vision_backbone(pixel_values[multimodal_indices][:, :3])
+                    patch_features_wrist_left = self.vision_backbone(pixel_values[multimodal_indices][:, 3:6])
+                    patch_features_wrist_right = self.vision_backbone(pixel_values[multimodal_indices][:, 6:9])
 
-        self.vision_feats = patch_features
+            self.vision_feats = torch.cat((patch_features, patch_features_wrist_left, patch_features_wrist_right),
+                                          dim=1)
 
-        # Projection Logic :: [bsz, num_patches, llm_embed_dim] =>> num_patches = (2 *) (256 + 1) for ViT-L + CLS
-        projected_patch_embeddings = self.projector(patch_features)
+            # Projection Logic :: [bsz, num_patches, llm_embed_dim] =>> num_patches = (2 *) (256 + 1) for ViT-L + CLS
+            projected_patch_embeddings = self.projector(patch_features)
+            projected_patch_embeddings_wrist_left = self.projector(patch_features_wrist_left)
+            projected_patch_embeddings_wrist_right = self.projector(patch_features_wrist_right)
+            projected_patch_embeddings = torch.cat(
+                (projected_patch_embeddings, projected_patch_embeddings_wrist_left,
+                 projected_patch_embeddings_wrist_right), dim=1)
+
+        elif load_wrist:
+            # Run Visual Feature Extraction
+            with torch.set_grad_enabled(self.vision_backbone_requires_grad):
+                if isinstance(pixel_values, dict):
+                    patch_features = self.vision_backbone(
+                        {k: pixel_values[k][multimodal_indices][:,:3] for k in pixel_values})
+                    patch_features_wrist = self.vision_backbone(
+                        {k: pixel_values[k][multimodal_indices][:,3:6] for k in pixel_values})
+                else:
+                    patch_features = self.vision_backbone(pixel_values[multimodal_indices][:,:3])
+                    patch_features_wrist = self.vision_backbone(pixel_values[multimodal_indices][:,3:6])
+
+            self.vision_feats = torch.cat((patch_features, patch_features_wrist), dim=1)
+
+            # Projection Logic :: [bsz, num_patches, llm_embed_dim] =>> num_patches = (2 *) (256 + 1) for ViT-L + CLS
+            projected_patch_embeddings = self.projector(patch_features)
+            projected_patch_embeddings_wrist = self.projector(patch_features_wrist)
+            projected_patch_embeddings = torch.cat((projected_patch_embeddings, projected_patch_embeddings_wrist), dim=1)
+
+        else:
+            # Run Visual Feature Extraction
+            with torch.set_grad_enabled(self.vision_backbone_requires_grad):
+                if isinstance(pixel_values, dict):
+                    patch_features = self.vision_backbone({k: pixel_values[k][multimodal_indices] for k in pixel_values})
+                else:
+                    patch_features = self.vision_backbone(pixel_values[multimodal_indices])
+
+            self.vision_feats = patch_features
+
+            # Projection Logic :: [bsz, num_patches, llm_embed_dim] =>> num_patches = (2 *) (256 + 1) for ViT-L + CLS
+            projected_patch_embeddings = self.projector(patch_features)
 
         if proprio_feat is not None:
             projected_patch_embeddings = torch.cat([projected_patch_embeddings, proprio_feat], dim=1)
@@ -523,6 +571,8 @@ class PrismaticVLM(VLM):
                 "past_key_values": past_key_values,
                 "use_cache": use_cache,
                 "proprio_feat": proprio_feat,
+                "load_wrist": kwargs.get("load_wrist", False),
+                "load_bi_wrist": kwargs.get("load_bi_wrist", False),
             }
         )
 

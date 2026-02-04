@@ -133,7 +133,7 @@ def eval_libero(cfg: GenerateConfig) -> None:
 
                     # Prepare observations dict
                     observation = {
-                        "base_cam": img,
+                        "image": img,
                         "states": np.concatenate(
                             (obs["robot0_eef_pos"], quat2axisangle(obs["robot0_eef_quat"]), obs["robot0_gripper_qpos"])
                         ),
@@ -146,32 +146,19 @@ def eval_libero(cfg: GenerateConfig) -> None:
                                                   episode_first_frame=episode_first_frame,
                                                   **observation)
 
-                    if ';' in action:
-                        action = action.replace(';', ' ')
-
-                    # str to np array
-                    action = action.split(' ')
-                    action = [float(x) for x in action]
-                    action = np.array(action, dtype=float)
-
                     episode_first_frame = 'False'
-                    action_dim = 7
 
                     # Adjust gripper action values according to your data's gripper definition
                     for i in range(len(action)):
-                        if i % action_dim == action_dim - 1:
-                            if action[i] == 1.0:
-                                action[i] = -1.0
-                            elif action[i] == 0.0:
-                                action[i] = 1.0
+                        if action[i][-1] == 1.0:
+                            action[i][-1] = -1.0
+                        elif action[i][-1] == 0.0:
+                            action[i][-1] = 1.0
 
                     done_flag = False
-                    chunk_size = len(action) // action_dim
-                    for i in range(chunk_size):
-                        action_chunk = action[i * action_dim:(i + 1) * action_dim]
-
+                    for i in range(len(action)):
                         # Execute action in environment
-                        obs, reward, done, info = env.step(action_chunk)
+                        obs, reward, done, info = env.step(action[i])
                         if done:
                             task_successes += 1
                             total_successes += 1

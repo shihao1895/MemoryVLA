@@ -121,6 +121,11 @@ class PaddedCollatorForActionPrediction:
         else:
             timesteps = None
 
+        if "lang" in instances[0]:
+            lang = np.concatenate([
+                np.array([instance["lang"]]) for instance in instances
+            ])
+
         # For now, we only support Tokenizers with `padding_side = "right"` during training
         #   => Handle padding via RNN Utils => `pad_sequence`
         assert self.padding_side == "right", f"Invalid Tokenizer `{self.padding_side = }`"
@@ -138,11 +143,67 @@ class PaddedCollatorForActionPrediction:
 
         # Stack all `pixel_values` --> depending on type is torch.Tensor or Dict[str, torch.Tensor]
         if isinstance(pixel_values[0], torch.Tensor):
-            pixel_values = torch.stack(pixel_values)
+            if "pixel_values_wrist" in instances[0]:
+                pixel_values_wrist = [instance["pixel_values_wrist"] for instance in instances]
+                pixel_values = torch.cat((torch.stack(pixel_values), torch.stack(pixel_values_wrist)), dim=1)
+            elif "pixel_values_left_wrist" in instances[0] and "pixel_values_right_wrist" in instances[0]:
+                pixel_values_left_wrist = [instance["pixel_values_left_wrist"] for instance in instances]
+                pixel_values_right_wrist = [instance["pixel_values_right_wrist"] for instance in instances]
+                pixel_values = torch.cat(
+                    (
+                        torch.stack(pixel_values),
+                        torch.stack(pixel_values_left_wrist),
+                        torch.stack(pixel_values_right_wrist),
+                    ),
+                    dim=1,
+                )
+            else:
+                pixel_values = torch.stack(pixel_values)
         elif isinstance(pixel_values[0], dict):
-            pixel_values = {
-                k: torch.stack([pixel_values[idx][k] for idx in range(len(input_ids))]) for k in pixel_values[0]
-            }
+            if "pixel_values_wrist" in instances[0]:
+                pixel_values_base = {
+                    k: torch.stack([pixel_values[idx][k] for idx in range(len(pixel_values))])
+                    for k in pixel_values[0]
+                }
+
+                pixel_values_wrist = [inst["pixel_values_wrist"] for inst in instances]
+                pixel_values_wrist = {
+                    k: torch.stack([pixel_values_wrist[idx][k] for idx in range(len(pixel_values_wrist))])
+                    for k in pixel_values_wrist[0]
+                }
+
+                pixel_values = {
+                    k: torch.cat((pixel_values_base[k], pixel_values_wrist[k]), dim=1)
+                    for k in pixel_values_base
+                }
+            elif "pixel_values_left_wrist" in instances[0] and "pixel_values_right_wrist" in instances[0]:
+                pixel_values_base = {
+                    k: torch.stack([pixel_values[idx][k] for idx in range(len(pixel_values))])
+                    for k in pixel_values[0]
+                }
+
+                pixel_values_left_wrist = [inst["pixel_values_left_wrist"] for inst in instances]
+                pixel_values_left_wrist = {
+                    k: torch.stack([pixel_values_left_wrist[idx][k] for idx in range(len(pixel_values_left_wrist))])
+                    for k in pixel_values_left_wrist[0]
+                }
+
+                pixel_values_right_wrist = [inst["pixel_values_right_wrist"] for inst in instances]
+                pixel_values_right_wrist = {
+                    k: torch.stack([pixel_values_right_wrist[idx][k] for idx in range(len(pixel_values_right_wrist))])
+                    for k in pixel_values_right_wrist[0]
+                }
+
+                pixel_values = {
+                    k: torch.cat(
+                        (pixel_values_base[k], pixel_values_left_wrist[k], pixel_values_right_wrist[k]), dim=1
+                    )
+                    for k in pixel_values_base
+                }
+            else:
+                pixel_values = {
+                    k: torch.stack([pixel_values[idx][k] for idx in range(len(input_ids))]) for k in pixel_values[0]
+                }
         else:
             raise ValueError(f"Unsupported `pixel_values` type = {type(pixel_values)}")
 
@@ -162,6 +223,7 @@ class PaddedCollatorForActionPrediction:
             dataset_names=dataset_names,
             episode_ids=episode_ids,
             timesteps=timesteps,
+            lang=lang,
         )
 
         return output

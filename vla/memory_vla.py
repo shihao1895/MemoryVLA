@@ -376,6 +376,8 @@ class MemoryVLA(nn.Module):
         fusion_type: str = 'gate',
         consolidate_type: str = 'tome',
         update_fused: bool = False,
+        load_wrist: bool = False,
+        load_bi_wrist: bool = False,
         **kwargs,
     ) -> None:
         super().__init__()
@@ -396,12 +398,26 @@ class MemoryVLA(nn.Module):
         self.fusion_type = fusion_type
         self.consolidate_type = consolidate_type
         self.update_fused = update_fused
+        self.load_wrist = load_wrist
+        self.load_bi_wrist = load_bi_wrist
 
         self.cur_timestep = 0
 
         self.vision_dim = self.vlm.vision_backbone.dino_featurizer.patch_embed.proj.weight.shape[0] + \
                  self.vlm.vision_backbone.siglip_featurizer.patch_embed.proj.weight.shape[0]
 
+        # extract the visual token number
+        if self.vlm.vision_backbone.featurizer is not None:
+            self.num_patch = self.vlm.vision_backbone.featurizer.patch_embed.num_patches
+        elif hasattr(self.vlm.vision_backbone, 'siglip_featurizer') and self.vlm.vision_backbone.siglip_featurizer is not None:
+            self.num_patch = self.vlm.vision_backbone.siglip_featurizer.patch_embed.num_patches
+        else:
+            raise ValueError("No vision backbone found")
+
+        if self.load_bi_wrist:
+            self.num_patch = self.num_patch * 3
+        elif self.load_wrist:
+            self.num_patch = self.num_patch * 2
 
         self.per_compr = BottleneckSE(
             C_in=self.vision_dim,
@@ -508,19 +524,13 @@ class MemoryVLA(nn.Module):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
+            load_wrist=self.load_wrist,
+            load_bi_wrist=self.load_bi_wrist,
         )
-
-        # extract the visual token number
-        if self.vlm.vision_backbone.featurizer is not None:
-            num_patch = self.vlm.vision_backbone.featurizer.patch_embed.num_patches
-        elif hasattr(self.vlm.vision_backbone, 'siglip_featurizer') and self.vlm.vision_backbone.siglip_featurizer is not None:
-            num_patch = self.vlm.vision_backbone.siglip_featurizer.patch_embed.num_patches
-        else:
-            raise ValueError("No vision backbone found")
 
         # extract the last hidden state and the learnable EOS token feature
         last_hidden_state = output.hidden_states[-1]
-        last_hidden_state = last_hidden_state[:, num_patch :]
+        last_hidden_state = last_hidden_state[:, self.num_patch :]
 
         # extract the cognition feature
         cumulative_sum = attention_mask.cumsum(dim=1)
@@ -531,7 +541,17 @@ class MemoryVLA(nn.Module):
             1, expanded_indices.unsqueeze(1))  # [B, 1, D]
 
         vision_feats = self.vlm.vision_feats
-        per_tokens = self.per_compr(vision_feats)
+        if self.load_bi_wrist:
+            per_tokens = self.per_compr(vision_feats[:, : self.num_patch//3, :])
+            per_tokens_wrist1 = self.per_compr(vision_feats[:, self.num_patch//3 : 2*self.num_patch//3, :])
+            per_tokens_wrist2 = self.per_compr(vision_feats[:, 2*self.num_patch//3 :, :])
+            per_tokens = torch.cat([per_tokens, per_tokens_wrist1, per_tokens_wrist2], dim=1)
+        elif self.load_wrist:
+            per_tokens = self.per_compr(vision_feats[:, : self.num_patch//2, :])
+            per_tokens_wrist = self.per_compr(vision_feats[:, self.num_patch//2 :, :])
+            per_tokens = torch.cat([per_tokens, per_tokens_wrist], dim=1)
+        else:
+            per_tokens = self.per_compr(vision_feats)
 
         cog_tokens = self.cog_mem_bank.process_batch(
             tokens=cog_tokens,
@@ -608,6 +628,7 @@ class MemoryVLA(nn.Module):
         action_model_type: str = 'DiT-L',
         use_ema: bool = False,
         norm_stats = None,
+        use_bf16: bool = False,
         **kwargs,
     ) -> MemoryVLA:
 
@@ -622,11 +643,18 @@ class MemoryVLA(nn.Module):
         )
 
         # Load from Checkpoint (Custom --> should load both *projector* and *llm* weights)
-        model_state_dict = torch.load(
-            pretrained_checkpoint,
-            # map_location="cpu",
-            map_location="cuda",
-        )["model"]
+        if use_bf16:
+            raw_state = torch.load(pretrained_checkpoint, map_location="cpu")["model"]
+            for k in raw_state:
+                for subk in raw_state[k]:
+                    raw_state[k][subk] = raw_state[k][subk].to(torch.bfloat16)
+
+            model_state_dict = raw_state
+        else:
+            model_state_dict = torch.load(
+                pretrained_checkpoint, map_location="cuda"
+            )["model"]
+
         assert (
             "projector" in model_state_dict and "llm_backbone" in model_state_dict
         ), "PrismaticVLM `from_pretrained` expects checkpoint with keys for `projector` AND `llm_backbone`!"
@@ -675,17 +703,22 @@ class MemoryVLA(nn.Module):
         gc.collect()
         torch.cuda.empty_cache()
 
+        if use_bf16:
+            memory_vla = memory_vla.to("cuda", dtype=torch.bfloat16)
+
         return memory_vla
 
     @torch.inference_mode()
     def predict_action(
-        self, image: Image, 
+        self, image: Image,
         instruction: str,
         unnorm_key: Optional[str] = None, 
         cfg_scale: float = 1.5, 
         use_ddim: bool = False,
         num_ddim_steps: int = 10,
         episode_first_frame: str = 'False',
+        image_wrist: Optional[Image] = None,
+        image_wrist_2: Optional[Image] = None,
         **kwargs: str
     ) -> np.ndarray:
         """
@@ -716,6 +749,8 @@ class MemoryVLA(nn.Module):
         else:
             raise ValueError(f"Unsupported `tokenizer` type = {type(tokenizer)}")
 
+        assert input_ids.shape[0] == 1
+
         model_dtype = next(self.parameters()).dtype
 
         # Preprocess Image
@@ -727,6 +762,33 @@ class MemoryVLA(nn.Module):
         else:
             raise ValueError(f"Unsupported `pixel_values` type = {type(pixel_values)}")
 
+        # wrist image
+        if self.load_bi_wrist:
+            assert image_wrist is not None and image_wrist_2 is not None
+            pixel_values_wrist = image_transform(image_wrist)
+            pixel_values_wrist_2 = image_transform(image_wrist_2)
+            if isinstance(pixel_values_wrist, torch.Tensor) and isinstance(pixel_values_wrist_2, torch.Tensor):
+                pixel_values_wrist = pixel_values_wrist[None, ...].to(self.vlm.device, dtype=model_dtype)
+                pixel_values_wrist_2 = pixel_values_wrist_2[None, ...].to(self.vlm.device, dtype=model_dtype)
+                pixel_values = torch.cat([pixel_values, pixel_values_wrist, pixel_values_wrist_2], dim=1)
+            elif isinstance(pixel_values_wrist, dict) and isinstance(pixel_values_wrist_2, dict):
+                pixel_values_wrist = {k: v[None, ...].to(self.vlm.device, dtype=model_dtype) for k, v in pixel_values_wrist.items()}
+                pixel_values_wrist_2 = {k: v[None, ...].to(self.vlm.device, dtype=model_dtype) for k, v in pixel_values_wrist_2.items()}
+                pixel_values = {k: torch.cat([pixel_values[k], pixel_values_wrist[k], pixel_values_wrist_2[k]], dim=1) for k in pixel_values.keys()}
+            else:
+                raise ValueError(f"Unsupported `pixel_values_wrist` type = {type(pixel_values_wrist)} or `pixel_values_wrist_2` type = {type(pixel_values_wrist_2)}")
+        elif self.load_wrist:
+            assert image_wrist is not None
+            pixel_values_wrist = image_transform(image_wrist)
+            if isinstance(pixel_values_wrist, torch.Tensor):
+                pixel_values_wrist = pixel_values_wrist[None, ...].to(self.vlm.device, dtype=model_dtype)
+                pixel_values = torch.cat([pixel_values, pixel_values_wrist], dim=1)
+            elif isinstance(pixel_values_wrist, dict):
+                pixel_values_wrist = {k: v[None, ...].to(self.vlm.device, dtype=model_dtype) for k, v in pixel_values_wrist.items()}
+                pixel_values = {k: torch.cat([pixel_values[k], pixel_values_wrist[k]], dim=1) for k in pixel_values.keys()}
+            else:
+                raise ValueError(f"Unsupported `pixel_values_wrist` type = {type(pixel_values_wrist)}")
+
         autocast_dtype = torch.bfloat16 if model_dtype == torch.bfloat16 else torch.float32
 
         with torch.autocast("cuda", dtype=autocast_dtype, enabled=(autocast_dtype == torch.bfloat16)):
@@ -737,6 +799,8 @@ class MemoryVLA(nn.Module):
                 max_new_tokens=1,
                 output_hidden_states=True, 
                 return_dict_in_generate=True,
+                load_wrist=self.load_wrist,
+                load_bi_wrist=self.load_bi_wrist,
                 **kwargs,
             )
             # fmt: on
@@ -748,11 +812,21 @@ class MemoryVLA(nn.Module):
         cog_tokens = cog_tokens.unsqueeze(1).to(model_dtype)  # [B, 1, D]
 
         vision_feats = self.vlm.vision_feats
-        per_tokens = self.per_compr(vision_feats)
+        if self.load_bi_wrist:
+            per_tokens = self.per_compr(vision_feats[:, : self.num_patch//3, :])
+            per_tokens_wrist1 = self.per_compr(vision_feats[:, self.num_patch//3 : 2*self.num_patch//3, :])
+            per_tokens_wrist2 = self.per_compr(vision_feats[:, 2*self.num_patch//3 :, :])
+            per_tokens = torch.cat([per_tokens, per_tokens_wrist1, per_tokens_wrist2], dim=1)
+        elif self.load_wrist:
+            per_tokens = self.per_compr(vision_feats[:, : self.num_patch//2, :])
+            per_tokens_wrist = self.per_compr(vision_feats[:, self.num_patch//2 :, :])
+            per_tokens = torch.cat([per_tokens, per_tokens_wrist], dim=1)
+        else:
+            per_tokens = self.per_compr(vision_feats)
 
         assert episode_first_frame in ['True', 'False'], "episode_first_frame must be 'True' or 'False'"
         if episode_first_frame == 'True':
-            print(" ** reset memory ** ")
+            # print(" ** reset memory ** ")
             self.cog_mem_bank.reset()
             self.per_mem_bank.reset()
             self.cur_timestep = 0
@@ -825,8 +899,11 @@ class MemoryVLA(nn.Module):
         action_norm_stats = self.get_action_stats(unnorm_key)
         mask = action_norm_stats.get("mask", np.ones_like(action_norm_stats["q01"], dtype=bool))
         action_high, action_low = np.array(action_norm_stats["q99"]), np.array(action_norm_stats["q01"])
-        normalized_actions = np.clip(normalized_actions, -1, 1)
-        normalized_actions[:, 6] = np.where(normalized_actions[:, 6] < 0.5, 0, 1) 
+        normalized_actions = np.where(
+            mask,
+            np.clip(normalized_actions, -1, 1),
+            normalized_actions,
+        )
         actions = np.where(
             mask,
             0.5 * (normalized_actions + 1) * (action_high - action_low) + action_low,

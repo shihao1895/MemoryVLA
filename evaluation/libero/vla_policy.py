@@ -27,13 +27,24 @@ class LLaVAClient:
                 encoded_img = None
             encoded_imgs.update({name: encoded_img})
 
-        ret = requests.post(
-            self.base_url+"/process_frame",
-            data={"text": text, 'episode_first_frame': episode_first_frame,},
+        if "image_wrist" in encoded_imgs:
+            ret = requests.post(
+                self.base_url+"/process_frame",
+                data={"text": text, 'episode_first_frame': episode_first_frame,},
 
-            files={"image": encoded_imgs.pop('base_cam', None),
-                    **({"states": ("states.npy", state.tobytes()) } if state is not None else {}),
-                    },
-        )
+                files={"image": encoded_imgs.pop('image', None),
+                       "image_wrist": encoded_imgs.pop('image_wrist', None),
+                        **({"states": ("states.npy", state.tobytes()) } if state is not None else {}),
+                        },
+            )
+        else:
+            ret = requests.post(
+                self.base_url + "/process_frame",
+                data={"text": text, 'episode_first_frame': episode_first_frame, },
+
+                files={"image": encoded_imgs.pop('image', None),
+                       **({"states": ("states.npy", state.tobytes())} if state is not None else {}),
+                       },
+            )
 
         return ret.json().get('response')

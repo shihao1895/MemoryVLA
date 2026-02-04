@@ -145,6 +145,10 @@ class VLAInference:
             episode_first_frame=episode_first_frame,
             )
 
+        # binarize the gripper action
+        raw_actions[:, 6] = np.clip(raw_actions[:, 6], -1, 1)
+        raw_actions[:, 6] = np.where(raw_actions[:, 6] < 0.5, 0, 1)
+
         if self.action_ensemble:
             raw_actions = self.action_ensembler.ensemble_action(raw_actions)[None]
         raw_action = {

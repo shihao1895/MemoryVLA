@@ -67,9 +67,11 @@ class PrismaticVisionBackbone(nn.Module):
         image_sizes: List[int],
         timm_model_ids: List[str],
         timm_override_act_layers: List[Optional[str]],
+        num_images: [Optional[int]]=1,
     ) -> None:
         super().__init__()
         self.use_fused_vision_backbone = use_fused_vision_backbone
+        self.num_images = num_images
 
         # [Contract] Validate number of (fused) vision backbones, create "alpha" featurizer and Instantiate
         #   =>> Note :: Monkey-Patch the `forward()` function of the backbone to ensure FSDP-compatibility
@@ -113,14 +115,38 @@ class PrismaticVisionBackbone(nn.Module):
 
     def forward(self, pixel_values: torch.Tensor) -> torch.Tensor:
         """Run image (`pixel_values`) through featurizer; if channel-stacked, then dispatch and sequence stack."""
-        if not self.use_fused_vision_backbone:
-            return self.featurizer(pixel_values)
+        if self.num_images == 1:
+            if not self.use_fused_vision_backbone:
+                return self.featurizer(pixel_values)
 
-        # Split `pixel_values :: [bsz, 2 * 3, resolution, resolution]` =>> featurize =>> channel stack
-        img, img_fused = torch.split(pixel_values, [3, 3], dim=1)
-        patches, patches_fused = self.featurizer(img), self.fused_featurizer(img_fused)
+            # Split `pixel_values :: [bsz, 2 * 3, resolution, resolution]` =>> featurize =>> channel stack
+            img, img_fused = torch.split(pixel_values, [3, 3], dim=1)
+            patches, patches_fused = self.featurizer(img), self.fused_featurizer(img_fused)
 
-        return torch.cat([patches, patches_fused], dim=2)
+            return torch.cat([patches, patches_fused], dim=2)
+
+        else:
+            assert self.use_fused_vision_backbone, "Multi-image inputs require using fused backbone!"
+
+            # Split `pixel_values` into individual images (each with 6 channels: 3 for SigLIP + 3 for DINOv2)
+            images = torch.split(pixel_values, [6] * self.num_images_in_input, dim=1)
+
+            # Process each image and collect patches
+            all_patches = []
+            for img in images:
+                # Split each image further into two stacks of channels (each with 3 channels)
+                img_regular, img_fused = torch.split(img, [3, 3], dim=1)
+
+                # Get patches from both SigLIP and DINOv2 vision transformers
+                patches = self.featurizer(img_regular)
+                patches_fused = self.fused_featurizer(img_fused)
+
+                # Concatenate SigLIP and DINOv2 patches along the hidden dimension
+                combined_patches = torch.cat([patches, patches_fused], dim=2)
+                all_patches.append(combined_patches)
+
+            # Concatenate all patches along the patch dimension
+            return torch.cat(all_patches, dim=1)
 
 
 # === Prismatic Projector (nn.Module) Definitions ===
