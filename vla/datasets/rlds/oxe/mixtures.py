@@ -290,5 +290,10 @@ OXE_NAMED_MIXTURES: Dict[str, List[Tuple[str, float]]] = {
         ("libero_10_no_noops", 1.0),
         ("libero_90_no_noops", 1.0),
     ],
+
+    # === MIKASA Dataset ===
+    "mikasa_dataset": [
+        ("mikasa_dataset", 1.0),
+    ],
 }
 # fmt: on
