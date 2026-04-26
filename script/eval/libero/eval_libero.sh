@@ -1,6 +1,17 @@
 #!/bin/bash
 set -euo pipefail
 export MKL_INTERFACE_LAYER=GNU
+export MUJOCO_GL=${MUJOCO_GL:-osmesa}
+
+# PAI air-gapped env: HF cache + LLaMA local mirror staged by scripts/setup_libero.sh
+# (no-ops on non-airgapped machines — guarded with ${:-default})
+WORKSPACE=${WORKSPACE:-$(pwd)}
+export HF_HOME=${HF_HOME:-$WORKSPACE/cache/hf}
+export HF_HUB_CACHE=${HF_HUB_CACHE:-$HF_HOME/hub}
+export TRANSFORMERS_CACHE=${TRANSFORMERS_CACHE:-$HF_HOME/transformers}
+export HF_HUB_OFFLINE=${HF_HUB_OFFLINE:-0}
+export TRANSFORMERS_OFFLINE=${TRANSFORMERS_OFFLINE:-0}
+export MEMVLA_LLAMA2_7B_LOCAL_PATH=${MEMVLA_LLAMA2_7B_LOCAL_PATH:-$WORKSPACE/cache/llama2-7b-local}
 
 ckpt_list=(
 PATH_TO_CKPT_1

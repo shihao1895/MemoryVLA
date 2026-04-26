@@ -1,0 +1,25 @@
+# SimplerEnv observation_utils.py — unwrap env for gymnasium 0.28+ compat
+#
+# Apply from the repo root after `third_libs/SimplerEnv/` is cloned:
+#   cd third_libs/SimplerEnv && patch -p0 < ../../scripts/patches/simpler_env_observation_utils.patch
+#
+# Why: gymnasium 0.28+'s wrappers (e.g. TimeLimit) do NOT fall back to __getattr__
+# for non-standard attributes on the inner env, unlike legacy `gym`. `env.robot_uid`
+# therefore raises AttributeError. Using `env.unwrapped.robot_uid` is the compliant path.
+#
+# See docs/eval_reproduction.md §3.1 for the full story.
+--- simpler_env/utils/env/observation_utils.py
++++ simpler_env/utils/env/observation_utils.py
+@@ -1,9 +1,10 @@
+ def get_image_from_maniskill2_obs_dict(env, obs, camera_name=None):
+     # obtain image from observation dictionary returned by ManiSkill2 environment
+     if camera_name is None:
+-        if "google_robot" in env.robot_uid:
++        robot_uid = env.unwrapped.robot_uid
++        if "google_robot" in robot_uid:
+             camera_name = "overhead_camera"
+-        elif "widowx" in env.robot_uid:
++        elif "widowx" in robot_uid:
+             camera_name = "3rd_view_camera"
+         else:
+             raise NotImplementedError()
