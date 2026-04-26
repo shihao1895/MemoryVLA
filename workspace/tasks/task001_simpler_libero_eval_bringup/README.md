@@ -1,4 +1,4 @@
-<!-- METADATA:STATUS=Open,ASSIGNEE= -->
+<!-- METADATA:STATUS=InProgress,ASSIGNEE=intern_memvla_developer -->
 
 # task001 — Simpler + LIBERO eval bringup
 
