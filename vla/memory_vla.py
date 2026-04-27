@@ -608,6 +608,7 @@ class MemoryVLA(nn.Module):
         action_model_type: str = 'DiT-L',
         use_ema: bool = False,
         norm_stats = None,
+        use_bf16: bool = False,
         **kwargs,
     ) -> MemoryVLA:
 
@@ -622,11 +623,18 @@ class MemoryVLA(nn.Module):
         )
 
         # Load from Checkpoint (Custom --> should load both *projector* and *llm* weights)
-        model_state_dict = torch.load(
-            pretrained_checkpoint,
-            # map_location="cpu",
-            map_location="cuda",
-        )["model"]
+        if use_bf16:
+            raw_state = torch.load(pretrained_checkpoint, map_location="cpu")["model"]
+            for k in raw_state:
+                for subk in raw_state[k]:
+                    raw_state[k][subk] = raw_state[k][subk].to(torch.bfloat16)
+
+            model_state_dict = raw_state
+        else:
+            model_state_dict = torch.load(
+                pretrained_checkpoint, map_location="cuda"
+            )["model"]
+
         assert (
             "projector" in model_state_dict and "llm_backbone" in model_state_dict
         ), "PrismaticVLM `from_pretrained` expects checkpoint with keys for `projector` AND `llm_backbone`!"
@@ -674,6 +682,9 @@ class MemoryVLA(nn.Module):
         import gc
         gc.collect()
         torch.cuda.empty_cache()
+
+        if use_bf16:
+            memory_vla = memory_vla.to("cuda", dtype=torch.bfloat16)
 
         return memory_vla
 

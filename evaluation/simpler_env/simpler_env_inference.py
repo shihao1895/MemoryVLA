@@ -1,4 +1,6 @@
 import os
+import argparse
+import sys
 import numpy as np
 import tensorflow as tf
 import yaml
@@ -23,17 +25,34 @@ def deep_update(base: dict, updates: dict):
     return base
 
 
+def parse_local_args(argv):
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("--use_bf16", action="store_true")
+    return parser.parse_known_args(argv)
+
+
 if __name__ == "__main__":
-    args = get_args()
+    local_args, remaining_argv = parse_local_args(sys.argv[1:])
+
+    original_argv = sys.argv
+    try:
+        sys.argv = [sys.argv[0], *remaining_argv]
+        args = get_args()
+    finally:
+        sys.argv = original_argv
 
     with open(os.path.join(os.path.dirname(os.path.dirname(args.ckpt_path)), 'config.yaml'), 'r') as f:
         yaml_args = yaml.safe_load(f) or {}
 
     cli_args = vars(args)
+    if local_args.use_bf16 is not None:
+        cli_args["use_bf16"] = local_args.use_bf16
     merged_args = deep_update(yaml_args.copy(), cli_args)
     args = Namespace(**merged_args)
+    if not hasattr(args, "use_bf16"):
+        args.use_bf16 = False
 
-    exclude_keys = {"pretrained_checkpoint",}
+    exclude_keys = {"pretrained_checkpoint", "use_bf16"}
     filtered_args = {k: v for k, v in vars(args).items() if k not in exclude_keys}
 
     args.logging_dir = os.path.join(os.path.dirname(os.path.dirname(args.ckpt_path)), 'eval_simpler')
@@ -53,6 +72,7 @@ if __name__ == "__main__":
     model = VLAInference(
         saved_model_path=args.ckpt_path,
         cfg_scale=1.5, # cfg from 1.5 to 7 also performs well
+        use_bf16=args.use_bf16,
         **filtered_args,
     )
 

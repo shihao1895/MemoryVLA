@@ -66,12 +66,17 @@ class VLAInference:
           action_model_type=action_model_type,
           future_action_window_size=future_action_window_size,
           action_dim=action_dim,
+          use_bf16=use_bf16,
           **kwargs,
         )
 
-        if use_bf16:
-            self.vla.vlm = self.vla.vlm.to(torch.bfloat16)
-        self.vla = self.vla.to("cuda").eval()
+        dtype = torch.bfloat16 if use_bf16 else torch.float32
+        device = torch.device("cuda")
+        self.vla = self.vla.to(device).to(dtype).eval()
+        print(f"Model loaded to {device} with dtype {dtype}.")
+
+        torch.cuda.empty_cache()
+
         self.cfg_scale = cfg_scale
 
         self.image_size = image_size
@@ -144,6 +149,10 @@ class VLAInference:
             num_ddim_steps=self.num_ddim_steps,
             episode_first_frame=episode_first_frame,
             )
+
+        # binarize the gripper action
+        raw_actions[:, 6] = np.clip(raw_actions[:, 6], -1, 1)
+        raw_actions[:, 6] = np.where(raw_actions[:, 6] < 0.5, 0, 1)
 
         if self.action_ensemble:
             raw_actions = self.action_ensembler.ensemble_action(raw_actions)[None]
