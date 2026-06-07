@@ -1,5 +1,53 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
+function bindVideoToggles() {
+  function playPanelVideos(panel) {
+    panel.querySelectorAll("video").forEach(function(video) {
+      video.muted = true;
+      var playPromise = video.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function() {});
+      }
+    });
+  }
+
+  function pausePanelVideos(panel) {
+    panel.querySelectorAll("video").forEach(function(video) {
+      video.pause();
+      video.currentTime = 0;
+    });
+  }
+
+  document.querySelectorAll(".video-toggle").forEach(function(button) {
+    if (button.dataset.bound === "true") {
+      return;
+    }
+
+    button.dataset.bound = "true";
+    button.addEventListener("click", function() {
+      var panel = button.closest(".video-toggle-row").nextElementSibling;
+      var isOpen = button.classList.toggle("is-active");
+      button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+
+      if (panel && panel.classList.contains("video-panel")) {
+        panel.classList.toggle("is-open", isOpen);
+        panel.style.display = isOpen ? "block" : "none";
+        if (isOpen) {
+          playPanelVideos(panel);
+        } else {
+          pausePanelVideos(panel);
+        }
+      }
+    });
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bindVideoToggles);
+} else {
+  bindVideoToggles();
+}
+
 var INTERP_BASE = "./static/animation";
 var NUM_INTERP_FRAMES = 50;
 
@@ -88,5 +136,7 @@ $(document).ready(function() {
         }
       });
     }
+
+    bindVideoToggles();
 
 })

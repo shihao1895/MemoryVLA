@@ -2,6 +2,119 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
+.top-more-research {
+  background: transparent;
+  position: fixed;
+  left: 2rem;
+  top: 1.5rem;
+  z-index: 20;
+}
+
+.top-more-research details {
+  position: relative;
+}
+
+.top-more-research summary {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e2e6ed;
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(10, 10, 10, 0.08);
+  color: #3a3a3a;
+  cursor: pointer;
+  display: flex;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 600;
+  gap: 0.65rem;
+  line-height: 1.5;
+  list-style: none;
+  padding: 0.55rem 0.9rem;
+  user-select: none;
+}
+
+.top-more-research summary:hover {
+  border-color: #b8d0ff;
+  color: #276ef1;
+}
+
+.top-more-research summary::-webkit-details-marker {
+  display: none;
+}
+
+.top-more-research summary::after {
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  content: "";
+  display: inline-block;
+  padding: 4px;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+.top-more-research details[open] summary::after {
+  transform: rotate(-135deg);
+}
+
+.top-more-research .more-research-dropdown {
+  background: #fff;
+  border: 1px solid #e2e6ed;
+  border-radius: 8px;
+  box-shadow: 0 14px 32px rgba(10, 10, 10, 0.12);
+  left: 0;
+  margin-top: 0.5rem;
+  min-width: 11rem;
+  padding: 0.25rem 0;
+  position: absolute;
+}
+
+.top-more-research .more-research-dropdown a {
+  color: #3a3a3a;
+  display: block;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.95rem;
+  padding: 0.65rem 0.9rem;
+  white-space: nowrap;
+}
+
+.top-more-research .more-research-dropdown a:hover {
+  background: #f5f5f5;
+  color: #276ef1;
+}
+
+.page-toc {
+  background: rgba(255, 255, 255, 0.96);
+  font-family: "Google Sans", sans-serif;
+  z-index: 15;
+}
+
+.page-toc a {
+  color: #4a4a4a;
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  padding: 0.45rem 0.75rem;
+  white-space: nowrap;
+}
+
+.page-toc a:hover {
+  color: #276ef1;
+}
+
+.page-toc a.toc-sub {
+  color: #6a6a6a;
+  font-size: 0.86rem;
+}
+
+.page-toc a.toc-sub-2 {
+  color: #777;
+  font-size: 0.8rem;
+}
+
+.section-anchor {
+  scroll-margin-top: 5rem;
+}
+
 
 .footer .icon-link {
     font-size: 25px;
@@ -110,6 +223,13 @@ body {
 .publication-body img {
 }
 
+.module-detail-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 88% !important;
+}
+
 .results-carousel {
   overflow: hidden;
 }
@@ -197,6 +317,298 @@ body {
   display: none;
   overflow: hidden;
   animation: fadein 0.25s ease;
+}
+
+.section-anchor > .columns,
+.video-section > .columns {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section-anchor > .columns > .column.is-four-fifths,
+.video-section > .columns > .column.is-four-fifths {
+  flex: none;
+  max-width: none;
+  width: 100%;
+}
+
+.section-anchor > .columns > .column > div[style*="width"],
+.section-anchor > .columns > .column > .collapsible-wrapper,
+.section-anchor > .columns > .column > .collapsible-content,
+.video-section .video-section-heading,
+.video-section .video-toggle-row,
+.video-section .video-panel,
+#abstract .container.is-max-desktop,
+#BibTeX .container.is-max-desktop {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 1120px !important;
+  width: min(1120px, calc(100vw - 4rem)) !important;
+}
+
+#abstract .columns,
+#BibTeX .columns {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#abstract .column.is-four-fifths {
+  flex: none;
+  padding-left: 0;
+  padding-right: 0;
+  width: 100%;
+}
+
+.video-section {
+  padding-top: 1rem;
+}
+
+.video-section .video-section-heading {
+  margin-top: 2.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.video-toggle-row {
+  margin-top: 1.2rem !important;
+  margin-bottom: 0.85rem !important;
+}
+
+.video-toggle {
+  align-items: center;
+  background: #f7f8fa;
+  border: 1px solid #dfe4eb;
+  border-radius: 6px;
+  color: #303236;
+  cursor: pointer;
+  display: flex;
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 600;
+  gap: 0.65rem;
+  justify-content: flex-start;
+  line-height: 1.25;
+  min-height: 2.45rem;
+  padding: 0.55rem 0.8rem;
+  text-align: left;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  width: 100%;
+}
+
+.video-toggle:hover,
+.video-toggle.is-active {
+  background: #eef4ff;
+  border-color: #b8d0ff;
+  color: #276ef1;
+}
+
+.video-toggle-icon {
+  border-bottom: 0.36em solid transparent;
+  border-left: 0.52em solid currentColor;
+  border-top: 0.36em solid transparent;
+  flex: 0 0 auto;
+  height: 0;
+  transition: transform 0.2s ease;
+  width: 0;
+}
+
+.video-toggle.is-active .video-toggle-icon {
+  transform: rotate(90deg);
+}
+
+.video-toggle-label {
+  flex: 1 1 auto;
+  overflow-wrap: anywhere;
+}
+
+.video-toggle::after {
+  background: #fff;
+  border: 1px solid #d5dbe3;
+  border-radius: 999px;
+  color: #555;
+  content: "Show";
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.35rem 0.55rem;
+}
+
+.video-toggle.is-active::after {
+  border-color: #b8d0ff;
+  color: #276ef1;
+  content: "Hide";
+}
+
+.video-panel {
+  display: none;
+  margin-bottom: 1.75rem !important;
+  text-align: left;
+}
+
+.video-panel.is-open {
+  display: block;
+}
+
+.collapsible-content .columns.is-multiline,
+.video-panel .columns.is-multiline {
+  align-items: stretch;
+  margin-left: -0.6rem;
+  margin-right: -0.6rem;
+}
+
+.collapsible-content .column.is-one-quarter,
+.video-panel .column.is-one-quarter {
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem;
+}
+
+.collapsible-content video,
+.video-panel video {
+  aspect-ratio: 1 / 1;
+  background: #111;
+  border-radius: 6px;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  width: 100%;
+}
+
+.mikasa-video-panel video {
+  aspect-ratio: auto !important;
+  background: transparent;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: initial;
+}
+
+.mikasa-video-panel .column.is-one-quarter {
+  flex: none;
+  justify-content: flex-start;
+  width: 33.3333%;
+}
+
+.collapsible-content .column.is-one-quarter p,
+.video-panel .column.is-one-quarter p {
+  color: #363636;
+  line-height: 1.35;
+  margin-top: 0.45rem;
+  min-height: 2.7em;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.collapsible-content h3,
+.video-panel h3 {
+  font-size: 1.35rem;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+  margin-top: 1.75rem;
+}
+
+@media screen and (min-width: 1280px) {
+  body {
+    padding-left: 13rem;
+  }
+
+  .page-toc {
+    border-left: 2px solid #f0f0f0;
+    left: 2rem;
+    position: fixed;
+    top: 8rem;
+    width: 11rem;
+  }
+
+  .page-toc a {
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+  }
+
+  .page-toc a:hover {
+    border-left-color: #276ef1;
+  }
+
+  .page-toc a.toc-sub {
+    padding-left: 1.4rem;
+  }
+
+  .page-toc a.toc-sub-2 {
+    padding-left: 2.1rem;
+  }
+
+  .section-anchor > .columns > .column > div[style*="width"],
+  .section-anchor > .columns > .column > .collapsible-wrapper,
+  .section-anchor > .columns > .column > .collapsible-content,
+  .video-section .video-section-heading,
+  .video-section .video-toggle-row,
+  .video-section .video-panel,
+  #abstract .container.is-max-desktop,
+  #BibTeX .container.is-max-desktop {
+    width: min(1120px, calc(100vw - 17rem)) !important;
+  }
+}
+
+@media screen and (max-width: 1279px) {
+  .top-more-research {
+    background: #fff;
+    padding: 0.75rem 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+
+  .page-toc {
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 4px 14px rgba(10, 10, 10, 0.04);
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    padding: 0.35rem 0.75rem;
+    position: sticky;
+    top: 3.5rem;
+  }
+
+  .page-toc a {
+    border-radius: 4px;
+  }
+
+  .page-toc a:hover {
+    background: #f5f5f5;
+  }
+
+  .page-toc a.toc-sub {
+    background: #fafafa;
+  }
+
+  .page-toc a.toc-sub-2 {
+    background: #fff;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mikasa-video-panel .column.is-one-quarter {
+    width: 100%;
+  }
+
+  .section-anchor > .columns > .column > div[style*="width"],
+  .section-anchor > .columns > .column > .collapsible-wrapper,
+  .section-anchor > .columns > .column > .collapsible-content,
+  .video-section .video-section-heading,
+  .video-section .video-toggle-row,
+  .video-section .video-panel,
+  #abstract .container.is-max-desktop,
+  #BibTeX .container.is-max-desktop {
+    width: calc(100vw - 2rem) !important;
+  }
+
+  .collapsible-content .column.is-one-quarter p,
+  .video-panel .column.is-one-quarter p {
+    min-height: 0;
+  }
+
+  .module-detail-image {
+    width: 100% !important;
+  }
 }
 
 @keyframes fadein {

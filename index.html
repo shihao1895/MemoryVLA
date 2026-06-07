@@ -24,17 +24,44 @@
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/index.css?v=20260608-pp-style">
   <link rel="icon" href="./static/images/icon.png">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+  <script src="./static/js/index.js?v=20260608-video-toggle"></script>
 
 
 </head>
 <body>
+
+<nav class="top-more-research" role="navigation" aria-label="more research">
+  <details>
+    <summary>More Research</summary>
+    <div class="more-research-dropdown">
+      <a href="https://shihao1895.github.io/MemoryVLA-PP-Web">MemoryVLA++</a>
+      <a href="https://shihao1895.github.io/SpatialActor">SpatialActor</a>
+      <a href="https://dexbotic.com">Dexbotic</a>
+    </div>
+  </details>
+</nav>
+
+<nav class="page-toc" aria-label="section navigation">
+  <a href="#introduction">Introduction</a>
+  <a href="#abstract">1 Abstract</a>
+  <a href="#method">2 Method</a>
+  <a class="toc-sub" href="#framework">2.1 Framework</a>
+  <a class="toc-sub" href="#modules">2.2 Modules</a>
+  <a href="#experiment">3 Experiment</a>
+  <a class="toc-sub" href="#experiment-setup">3.1 Overview</a>
+  <a class="toc-sub" href="#real-robot">3.2 Robot Setup</a>
+  <a class="toc-sub" href="#real-robot-evaluation">3.3 Real Robot</a>
+  <a class="toc-sub" href="#simulation-evaluation">3.4 Simulation</a>
+  <a href="#insights">4 Insights</a>
+  <a href="#memoryvla-pp">5 MemoryVLA++</a>
+  <a href="#BibTeX">BibTeX</a>
+</nav>
 
 
 <section class="hero">
@@ -46,6 +73,9 @@
 
           <h2 class="is-size-4" style="margin-top:1.2rem; color:#000000; font-weight:500; letter-spacing:0.3px;">
             ICLR 2026
+          </h2>
+          <h2 class="is-size-5" style="margin-top:0.35rem; color:#000000; font-weight:500; letter-spacing:0.3px;">
+            CVPR Workshop <span style="color:#ff3860; font-weight:700;">Oral</span>
           </h2>
 
           <div class="is-size-5 publication-authors">
@@ -85,20 +115,16 @@
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Department of Automation, BNRist, Tsinghua University,</span>
+            <span class="author-block"><sup>1</sup>THU LeapLab,</span>
             <span class="author-block"><sup>2</sup>Dexmal,</span>
-          </div>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>3</sup>MEGVII Technology,</span>
-            <span class="author-block"><sup>4</sup>Tianjin University,</span>
-            <span class="author-block"><sup>5</sup>Harbin Institute of Technology,</span>
-            <span class="author-block"><sup>6</sup>StepFun</span>
+            <span class="author-block"><sup>3</sup>MEGVII,</span>
+            <span class="author-block"><sup>4</sup>TJU,</span>
+            <span class="author-block"><sup>5</sup>HIT,</span>
+            <span class="author-block"><sup>6</sup>Stepfun</span>
           </div>
 
           <div class="is-size-6 publication-authors">
-            <span class="author-block">shi-h23@mails.tsinghua.edu.cn,</span>
-            <span class="author-block">wtc@dexmal.com,</span>
-            <span class="author-block">gaohuang@tsinghua.edu.cn</span>
+            <span class="author-block">shihao1895@gmail.com</span>
           </div>
 
           <div class="column has-text-centered">
@@ -161,6 +187,16 @@
                   <span>Slides</span>
                   </a>
               </span>
+              <!-- Journal Version Link. -->
+              <span class="link-block">
+                <a href="https://shihao1895.github.io/MemoryVLA-PP-Web"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-book-open"></i>
+                  </span>
+                  <span>Journal Version</span>
+                  </a>
+              </span>
               <br>
               <!-- Video Link. -->
               <span class="link-block">
@@ -202,10 +238,10 @@
 
 
 <!-- Intro-->
-<section class="hero teaser">
+<section class="hero teaser section-anchor" id="introduction">
   <div class="columns is-centered has-text-centered">
     <div class="column is-four-fifths">
-      <!-- <h2 class="title is-3">Introduction</h2> -->
+      <h2 class="title is-3 mb-5 has-text-left">Introduction</h2>
       <div style="width:80%; margin:0 auto;">
         <img src="static/images/fig_1_intro.png" style="width:100%; height:auto; margin-bottom:1rem;">
         <p class="has-text-justified is-size-6" style="margin-top:1rem;">
@@ -222,15 +258,15 @@
 
 
 <!-- Abstract -->
-<section class="section">
+<section class="section section-anchor" id="abstract">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3 has-text-left">1 Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Temporal context is essential for robotic manipulation because such tasks are inherently <b>non-Markovian</b>, yet mainstream VLA models typically overlook it and struggle with long-horizon, temporally dependent tasks.
-            <b>Cognitive science</b> suggests that humans rely on working memory to buffer short-lived representations for immediate control, while the <b>hippocampal</b> system preserves verbatim episodic details and semantic gist of past experience for long-term memory.
+            Temporal context is essential for robotic manipulation because such tasks are inherently non-Markovian, yet mainstream VLA models typically overlook it and struggle with long-horizon, temporally dependent tasks.
+            Cognitive science suggests that humans rely on working memory to buffer short-lived representations for immediate control, while the hippocampal system preserves verbatim episodic details and semantic gist of past experience for long-term memory.
           </p>
           <p>
             Inspired by these mechanisms, we propose <b>MemoryVLA</b>, a Cognition-Memory-Action framework for long-horizon robotic manipulation.
@@ -238,9 +274,9 @@
             Working memory retrieves decision-relevant entries from the bank, adaptively fuses them with current tokens, and updates the bank by merging redundancies. Using these tokens, a memory-conditioned diffusion action expert yields temporally aware action sequences.
           </p>
           <p>
-            We evaluate MemoryVLA on <b>150+</b> simulation and real-world tasks across three robots.
-            On SimplerEnv-Bridge, Fractal, and LIBERO-5 suites, it achieves 71.9%, 72.7%, and 96.5% success rates, respectively, all outperforming state-of-the-art baselines CogACT and PI-0, with a notable <b>+14.6</b> gain on Bridge.
-            On 12 real-world tasks spanning general skills and long-horizon temporal dependencies, MemoryVLA achieves 84.0% success rate, with long-horizon tasks showing a <b>+26</b> improvement over state-of-the-art baseline.
+            We evaluate MemoryVLA on 150+ simulation and real-world tasks across three robots.
+            On SimplerEnv-Bridge, Fractal, and Libero-5 suites, it achieves 71.9%, 72.7%, and 96.5% success rates, respectively, all outperforming state-of-the-art baselines CogACT and PI-0, with a notable +14.6 gain on Bridge.
+            On 12 real-world tasks spanning general skills and long-horizon temporal dependencies, MemoryVLA achieves 84.0% success rate, with long-horizon tasks showing a +26 improvement over state-of-the-art baseline.
             Moreover, MemoryVLA exhibits strong robustness and generalization under various out-of-distribution conditions.
           </p>
         </div>
@@ -249,11 +285,24 @@
   </div>
 </section>
 
-<!-- Framework -->
-<section class="hero teaser">
+<!-- Method -->
+<section class="hero teaser section-anchor" id="method">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <h2 class="title is-3 mb-5">Framework</h2>
+      <div style="width:80%; margin:0 auto;">
+        <h2 class="title is-3 mb-5 has-text-left">2 Method</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Framework -->
+<section class="hero teaser section-anchor" id="framework">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <div style="width:80%; margin:0 auto;">
+        <h2 class="title is-3 mb-5 has-text-left">2.1 Framework</h2>
+      </div>
       <div style="width:80%; margin:0 auto;">
         <img src="static/images/fig_2_method.png"
              style="width:100%; height:auto; margin-bottom:1rem;">
@@ -270,12 +319,14 @@
 </section>
 
 <!-- Modules -->
-<section class="hero teaser">
+<section class="hero teaser section-anchor" id="modules">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <h2 class="title is-3 mb-5">Module Details</h2>
       <div style="width:75%; margin:0 auto;">
-        <img src="static/images/fig_3_modules.png"
+        <h2 class="title is-3 mb-5 has-text-left">2.2 Module Details</h2>
+      </div>
+      <div style="width:75%; margin:0 auto;">
+        <img class="module-detail-image" src="static/images/fig_3_modules.png"
              style="width:100%; height:auto; margin-bottom:1rem;">
         <p class="has-text-justified is-size-6 "
            style="margin-top:1rem; margin-bottom:2.5rem;">
@@ -290,18 +341,31 @@
   </div>
 </section>
 
-<!-- Experimental Setup -->
-<section class="hero teaser">
+<!-- Experiment -->
+<section class="hero teaser section-anchor" id="experiment">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <h2 class="title is-3 mb-5">Experimental Setup</h2>
+      <div style="width:80%; margin:0 auto;">
+        <h2 class="title is-3 mb-5 has-text-left">3 Experiment</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experimental Overview -->
+<section class="hero teaser section-anchor" id="experiment-setup">
+  <div class="columns is-centered">
+    <div class="column is-four-fifths has-text-centered">
+      <div style="width:80%; margin:0 auto;">
+        <h2 class="title is-3 mb-5 has-text-left">3.1 Experimental Overview</h2>
+      </div>
       <div style="width:80%; margin:0 auto;">
         <img src="static/images/fig_4_exp_setup.png"
              style="width:100%; height:auto; margin-bottom:1rem;">
         <p class="has-text-justified is-size-6"
            style="margin-top:1rem; margin-bottom:2.5rem;">
-          <b>Experimental setup overview.</b> 
-          Top: three simulation benchmarks, <i>SIMPLER-Bridge</i> with WidowX, <i>SIMPLER-Fractal</i> with Google Robot, and <i>LIBERO</i> with Franka. 
+          <b>Experimental overview.</b> 
+          Top: three simulation benchmarks, <i>SIMPLER-Bridge</i> with WidowX, <i>SIMPLER-Fractal</i> with Google Robot, and <i>Libero</i> with Franka. 
           Bottom: real-world evaluation on two suites, <i>General</i> and <i>Long-horizon Temporal</i>. 
           In total, we evaluate three robots across 10 suites, spanning over <b>150 tasks</b> and <b>500 variations</b>.
         </p>
@@ -310,11 +374,13 @@
   </div>
 </section>
 
-<!-- Real Robots Setup -->
-<section class="hero teaser">
+<!-- Real Robot Setup -->
+<section class="hero teaser section-anchor" id="real-robot">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <h2 class="title is-3 mb-5">Real Robots Setup</h2>
+      <div style="width:80%; margin:0 auto;">
+        <h2 class="title is-3 mb-5 has-text-left">3.2 Real Robot Setup</h2>
+      </div>
       <div style="display:flex; justify-content:center; gap:20px; align-items:stretch;">
         <div style="flex:1; display:flex; align-items:center; justify-content:center;">
           <img src="static/images/fig_14_franka.png"
@@ -330,19 +396,20 @@
 </section>
 
 <!-- Video -->
-<section class="hero teaser">
+<section class="section video-section section-anchor" id="evaluation-videos">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <!-- Real -->
-      <div class="collapsible-wrapper">
-        <button class="collapsible">
-          <span class="triangle">▶</span>
-          <span>Real-world Evaluation</span>
+      <div class="video-section-heading section-anchor" id="real-robot-evaluation">
+        <h2 class="title is-3 mb-5 has-text-left">3.3 Real Robot Evaluation</h2>
+      </div>
+      <!-- Temporal -->
+      <div class="video-toggle-row section-anchor" id="long-horizon-temporal">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">Long-horizon Temporal Tasks</span>
         </button>
       </div>
-      <div class="collapsible-content">
-        <!-- Temporal -->
-        <h3 class="title is-4 mt-4">Long-horizon Temporal Tasks</h3>
+      <div class="video-panel">
         <div class="columns is-multiline">
           <div class="column is-one-quarter">
             <video controls width="100%">
@@ -381,9 +448,16 @@
             <p class="is-size-6">Clean Restaurant Table</p>
           </div>
         </div>
+      </div>
 
-        <!-- General -->
-        <h3 class="title is-4 mt-4">General Manipulation Tasks</h3>
+      <!-- General -->
+      <div class="video-toggle-row section-anchor" id="general-tasks">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">General Tasks</span>
+        </button>
+      </div>
+      <div class="video-panel">
         <div class="columns is-multiline">
           <div class="column is-one-quarter">
             <video controls width="100%">
@@ -448,14 +522,59 @@
         </div>
       </div>
 
-      <!-- SimplerEnv -->
-      <div class="collapsible-wrapper">
-        <button class="collapsible">
-          <span class="triangle">▶</span>
-          <span>SimplerEnv Simulation Evaluation</span>
+      <!-- OOD -->
+      <div class="video-toggle-row section-anchor" id="real-robustness">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">Robustness &amp; Generalization</span>
         </button>
       </div>
-      <div class="collapsible-content">
+      <div class="video-panel">
+        <!-- Pick Place Order -->
+        <h3 class="title is-4 mt-4">Pick Place Order</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
+        </div>
+
+        <!-- Clean Restaurant Table -->
+        <h3 class="title is-4 mt-4">Clean Restaurant Table</h3>
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
+        </div>
+
+        <h3 class="title is-4 mt-4">Real-world OOD Tests</h3>
+        <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
+          <img src="static/images/fig_5_ood_real.png"
+              style="width:100%; height:auto; margin-bottom:2rem;"
+              alt="OOD Real Results">
+        </div>
+
+      </div>
+
+      <div class="video-section-heading section-anchor" id="simulation-evaluation">
+        <h2 class="title is-3 mb-5 has-text-left">3.4 Simulation Evaluation</h2>
+      </div>
+
+      <!-- SimplerEnv -->
+      <div class="video-toggle-row section-anchor" id="simplerenv">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">SimplerEnv</span>
+        </button>
+      </div>
+      <div class="video-panel">
         <!-- Bridge -->
         <h3 class="title is-4 mt-4">SimplerEnv-Bridge Tasks</h3>
         <div class="columns is-multiline">
@@ -521,164 +640,156 @@
         </div>
       </div>
 
-      <!-- LIBERO -->
-      <div class="collapsible-wrapper">
-        <button class="collapsible">
-          <span class="triangle">▶</span>
-          <span>LIBERO Simulation Evaluation</span>
+      <!-- Libero -->
+      <div class="video-toggle-row section-anchor" id="libero">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">Libero</span>
         </button>
       </div>
-      <div class="collapsible-content">
-        <!-- LIBERO-Spatial -->
-        <h3 class="title is-4 mt-4">LIBERO-Spatial Tasks</h3>
+      <div class="video-panel">
+        <!-- Libero-Spatial -->
+        <h3 class="title is-4 mt-4">Libero-Spatial Tasks</h3>
         <div class="columns is-multiline">
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_cabinet_on_plate.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Spatial/bowl_cabinet_on_plate.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Bowl: Cabinet → Plate</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_cookie_box_on_plate.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Spatial/bowl_cookie_box_on_plate.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Bowl: Cookie Box → Plate</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_drawer_on_plate.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Spatial/bowl_drawer_on_plate.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Bowl: Drawer → Plate</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Spatial/bowl_stove_on_plate.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Spatial/bowl_stove_on_plate.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Bowl: Stove → Plate</p>
           </div>
         </div>
 
-        <!-- LIBERO-Object -->
-        <h3 class="title is-4 mt-4">LIBERO-Object Tasks</h3>
+        <!-- Libero-Object -->
+        <h3 class="title is-4 mt-4">Libero-Object Tasks</h3>
         <div class="columns is-multiline">
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Object/alphabet_soup_in_basket.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Object/alphabet_soup_in_basket.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Alphabet Soup in Basket</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Object/chocolate_in_basket.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Object/chocolate_in_basket.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Chocolate in Basket</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Object/orange_juice_in_basket.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Object/orange_juice_in_basket.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Orange Juice in Basket</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Object/tomato_sauce_in_basket.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Object/tomato_sauce_in_basket.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Tomato Sauce in Basket</p>
           </div>
         </div>
 
-        <!-- LIBERO-Goal -->
-        <h3 class="title is-4 mt-4">LIBERO-Goal Tasks</h3>
+        <!-- Libero-Goal -->
+        <h3 class="title is-4 mt-4">Libero-Goal Tasks</h3>
         <div class="columns is-multiline">
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Goal/bowl_in_top_drawer.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Goal/bowl_in_top_drawer.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Bowl in Top Drawer</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Goal/open_middle_drawer.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Goal/open_middle_drawer.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Open Middle Drawer</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Goal/turn_on_stove.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Goal/turn_on_stove.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Turn On Stove</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Goal/wine_bottle_on_rack.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Goal/wine_bottle_on_rack.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Wine Bottle on Rack</p>
           </div>
         </div>
 
-        <!-- LIBERO-Long -->
-        <h3 class="title is-4 mt-4">LIBERO-Long Tasks</h3>
+        <!-- Libero-Long -->
+        <h3 class="title is-4 mt-4">Libero-Long Tasks</h3>
         <div class="columns is-multiline">
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Long/alphabet_soup_and_tomato_sauce_in_basket.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Long/alphabet_soup_and_tomato_sauce_in_basket.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Alphabet Soup &amp; Tomato Sauce in Basket</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Long/bowl_in_bottom_drawer_and_close.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Long/bowl_in_bottom_drawer_and_close.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Bowl in Bottom Drawer &amp; Close</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Long/turn_on_stove_and_put_moka_pot.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Long/turn_on_stove_and_put_moka_pot.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Turn On Stove &amp; Put Moka Pot</p>
           </div>
           <div class="column is-one-quarter">
             <video controls width="100%">
-              <source src="static/videos/LIBERO/LIBERO-Long/yellow_white_mug_in_microwave_and_close.mp4" type="video/mp4">
+              <source src="static/videos/Libero/Libero-Long/yellow_white_mug_in_microwave_and_close.mp4" type="video/mp4">
             </video>
             <p class="is-size-6">Yellow/White Mug in Microwave &amp; Close</p>
           </div>
         </div>
       </div>
 
-      <!-- OOD -->
-      <div class="collapsible-wrapper">
-        <button class="collapsible">
-          <span class="triangle">▶</span>
-          <span>Robustness and Generalization Evaluation</span>
+      <!-- Mikasa-Robo -->
+      <div class="video-toggle-row section-anchor" id="mikasa-robo">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">Mikasa-Robo</span>
         </button>
       </div>
-      <div class="collapsible-content">
-        <!-- Pick Place Order -->
-        <h3 class="title is-4 mt-4">Pick Place Order</h3>
+      <div class="video-panel mikasa-video-panel">
         <div class="columns is-multiline">
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_PickPlaceOrder/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/Mikasa_Robo/InterceptMedium.mp4" type="video/mp4"></video><p class="is-size-6">Intercept Medium</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/Mikasa_Robo/RememberColor3.mp4" type="video/mp4"></video><p class="is-size-6">Remember Color 3</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/Mikasa_Robo/RememberColor5.mp4" type="video/mp4"></video><p class="is-size-6">Remember Color 5</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/Mikasa_Robo/RememberColor9.mp4" type="video/mp4"></video><p class="is-size-6">Remember Color 9</p></div>
+          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/Mikasa_Robo/ShellGameTouch.mp4" type="video/mp4"></video><p class="is-size-6">Shell Game Touch</p></div>
         </div>
+      </div>
 
-        <!-- Clean Restaurant Table -->
-        <h3 class="title is-4 mt-4">Clean Restaurant Table</h3>
-        <div class="columns is-multiline">
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/background.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Background</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/distractors.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Distractors</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/lighting.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/object.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Object</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/container.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Container</p></div>
-          <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Real_CleanRestaurantTable/occlusion.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Occlusion</p></div>
-        </div>
-
-        <!-- Place In Drawer -->
+      <!-- Simulation OOD -->
+      <div class="video-toggle-row section-anchor" id="simulation-robustness">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">Robustness &amp; Generalization</span>
+        </button>
+      </div>
+      <div class="video-panel">
         <h3 class="title is-4 mt-4">Put in Drawer</h3>
         <div class="columns is-multiline">
           <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/base.mp4" type="video/mp4"></video><p class="is-size-6">Base</p></div>
@@ -687,51 +798,6 @@
           <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_brighter.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (brighter)</p></div>
           <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/lighting_darker.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Lighting (darker)</p></div>
           <div class="column is-one-quarter"><video controls width="100%"><source src="static/videos/OOD/Simulation_PlaceInDrawer/texture.mp4" type="video/mp4"></video><p class="is-size-6">Unseen Texture</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Performance -->
-<section class="hero teaser">
-  <div class="columns is-centered">
-    <div class="column is-four-fifths has-text-centered">
-      <div class="collapsible-wrapper">
-        <button class="collapsible">
-          <span class="triangle">▶</span>
-          <span>Performance</span>
-        </button>
-      </div>
-      <div class="collapsible-content">
-        <div style="width:80%; margin:0 auto;">
-          <h3 class="title is-4 mt-4">SimplerEnv-Bridge Benchmark</h3>
-          <a href="static/images/tab_1.png" target="_blank">
-            <img src="static/images/tab_1.png" alt="SimplerEnv-Bridge Benchmark"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <h3 class="title is-4 mt-4">SimplerEnv-Fractal Benchmark</h3>
-          <a href="static/images/tab_2.png" target="_blank">
-            <img src="static/images/tab_2.png" alt="SimplerEnv-Fractal Benchmark"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <h3 class="title is-4 mt-4">LIBERO Benchmark</h3>
-          <a href="static/images/tab_3.png" target="_blank">
-            <img src="static/images/tab_3.png" alt="LIBERO Benchmark"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <h3 class="title is-4 mt-4">Real World</h3>
-          <a href="static/images/tab_4.png" target="_blank">
-            <img src="static/images/tab_4.png" alt="Real World"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-
-        <!-- OOD -->
-        <h3 class="title is-4 mt-4">Real-world OOD Tests</h3>
-        <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
-          <img src="static/images/fig_5_ood_real.png"
-              style="width:100%; height:auto; margin-bottom:2rem;"
-              alt="OOD Real Results">
         </div>
         <h3 class="title is-4 mt-4">Pick and Move OOD Tests in Simulation</h3>
         <div style="width:80%; margin:2rem auto 0 auto; text-align:center;">
@@ -746,55 +812,78 @@
               style="width:100%; height:auto; margin-bottom:2rem;"
               alt="OOD Drawer Results">
         </div>
-
-        </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- Further Analysis -->
-<section class="hero teaser">
+<!-- Insights -->
+<section class="hero teaser section-anchor" id="insights">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <div class="collapsible-wrapper">
-        <button class="collapsible">
-          <span class="triangle">▶</span>
-          <span>Further Analysis</span>
+      <div style="width:80%; margin:0 auto;">
+        <h2 class="title is-3 mb-5 has-text-left">4 Insights</h2>
+      </div>
+      <div class="video-toggle-row" style="width:80%; margin-left:auto; margin-right:auto;">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">What Matters in VLA</span>
         </button>
       </div>
-      <div class="collapsible-content">
+      <div class="video-panel">
         <div style="width:80%; margin:0 auto;">
-          <a href="static/images/deep_exploration_1.png" target="_blank">
-            <img src="static/images/deep_exploration_1.png" alt="Deep Exploration 1"
+          <a href="static/images/insight_1.png" target="_blank">
+            <img src="static/images/insight_1.png" alt="Insight 1"
+                 style="width:100%; height:auto; margin-bottom:0;" loading="lazy">
+          </a>
+        </div>
+      </div>
+
+      <div class="video-toggle-row" style="width:80%; margin-left:auto; margin-right:auto;">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">Why Need Memory</span>
+        </button>
+      </div>
+      <div class="video-panel">
+        <div style="width:80%; margin:0 auto;">
+          <a href="static/images/insight_2.png" target="_blank">
+            <img src="static/images/insight_2.png" alt="Insight 2"
+                 style="width:100%; height:auto; margin-bottom:0;" loading="lazy">
+          </a>
+        </div>
+      </div>
+
+      <div class="video-toggle-row" style="width:80%; margin-left:auto; margin-right:auto;">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">How to Address It</span>
+        </button>
+      </div>
+      <div class="video-panel">
+        <div style="width:80%; margin:0 auto;">
+          <a href="static/images/insight_3.png" target="_blank">
+            <img src="static/images/insight_3.png" alt="Insight 3"
                  style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
           </a>
-          <a href="static/images/deep_exploration_2.png" target="_blank">
-            <img src="static/images/deep_exploration_2.png" alt="Deep Exploration 2"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+          <a href="static/images/insight_4.png" target="_blank">
+            <img src="static/images/insight_4.png" alt="Insight 4"
+                 style="width:100%; height:auto; margin-bottom:0;" loading="lazy">
           </a>
-          <a href="static/images/deep_exploration_3.png" target="_blank">
-            <img src="static/images/deep_exploration_3.png" alt="Deep Exploration 3"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <a href="static/images/deep_exploration_4.png" target="_blank">
-            <img src="static/images/deep_exploration_4.png" alt="Deep Exploration 4"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <a href="static/images/deep_exploration_5.png" target="_blank">
-            <img src="static/images/deep_exploration_5.png" alt="Deep Exploration 5"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <a href="static/images/deep_exploration_6.png" target="_blank">
-            <img src="static/images/deep_exploration_6.png" alt="Deep Exploration 6"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <a href="static/images/deep_exploration_7.png" target="_blank">
-            <img src="static/images/deep_exploration_7.png" alt="Deep Exploration 7"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-          <a href="static/images/deep_exploration_8.png" target="_blank">
-            <img src="static/images/deep_exploration_8.png" alt="Deep Exploration 8"
+        </div>
+      </div>
+
+      <div class="video-toggle-row" style="width:80%; margin-left:auto; margin-right:auto;">
+        <button class="video-toggle" type="button" aria-expanded="false">
+          <span class="video-toggle-icon" aria-hidden="true"></span>
+          <span class="video-toggle-label">Analogy to Autonomous Driving</span>
+        </button>
+      </div>
+      <div class="video-panel">
+        <div style="width:80%; margin:0 auto;">
+          <a href="static/images/insight_5.png" target="_blank">
+            <img src="static/images/insight_5.png" alt="Insight 5"
                  style="width:100%; height:auto; margin-bottom:0;" loading="lazy">
           </a>
         </div>
@@ -803,35 +892,31 @@
   </div>
 </section>
 
-<!-- Future Outlook -->
-<section class="hero teaser">
+<!-- MemoryVLA++ -->
+<section class="hero teaser section-anchor" id="memoryvla-pp" style="margin-top:3rem;">
   <div class="columns is-centered">
     <div class="column is-four-fifths has-text-centered">
-      <div class="collapsible-wrapper">
-        <button class="collapsible">
-          <span class="triangle">▶</span>
-          <span>Future Outlook</span>
-        </button>
-      </div>
-      <div class="collapsible-content">
-        <div style="width:80%; margin:0 auto;">
-          <h3 class="title is-4 mt-4">Memory Reflection</h3>
-          <a href="static/images/future_1.png" target="_blank">
-            <img src="static/images/future_1.png" alt="Future Outlook 1"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+      <div style="width:80%; margin:0 auto;">
+        <h2 class="title is-3 mb-5 has-text-left">5 MemoryVLA++: Full Temporal Aware</h2>
+        <img src="static/images/memoryvla_pp.png"
+             alt="MemoryVLA++ Full Temporal Aware"
+             style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
+        <p class="has-text-justified is-size-6" style="margin-top:1rem; margin-bottom:1.4rem;">
+          <b>MemoryVLA++</b> is the extended journal version of <b>MemoryVLA</b>. We compare three paradigms: (1) <b>typical VLAs</b> are reactive and rely only on the present observation, (2) <b>MemoryVLA</b> introduces a working memory-episodic memory mechanism to capture past temporal dependencies, and (3) <b>MemoryVLA++</b> further extends this by incorporating future imagination via a world model for full temporal modeling.
+        </p>
+        <p class="has-text-centered" style="margin-bottom:2.5rem;">
+          <a href="https://shihao1895.github.io/MemoryVLA-PP-Web"
+             class="external-link button is-normal"
+             style="background:#eaf7ff; border-color:#78c8ff; color:#0b7ec2; font-family:'Google Sans', sans-serif; font-weight:700; border-radius:8px; min-width:18rem; box-shadow:0 6px 16px rgba(11,126,194,0.12);">
+            <span>MemoryVLA++</span>
           </a>
-          <h3 class="title is-4 mt-4">Lifelong Memory</h3>
-          <a href="static/images/future_2.png" target="_blank">
-            <img src="static/images/future_2.png" alt="Future Outlook 2"
-                 style="width:100%; height:auto; margin-bottom:1rem;" loading="lazy">
-          </a>
-        </div>
+        </p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="BibTeX">
+<section class="section section-anchor" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     <pre><code>@article{shi2025memoryvla,
