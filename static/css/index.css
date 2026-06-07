@@ -230,6 +230,10 @@ body {
   width: 88% !important;
 }
 
+.robot-setup-grid {
+  max-width: 1120px;
+}
+
 .results-carousel {
   overflow: hidden;
 }
@@ -588,6 +592,10 @@ body {
 @media screen and (max-width: 768px) {
   .mikasa-video-panel .column.is-one-quarter {
     width: 100%;
+  }
+
+  .robot-setup-grid {
+    flex-direction: column;
   }
 
   .section-anchor > .columns > .column > div[style*="width"],
