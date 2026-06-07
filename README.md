@@ -7,10 +7,11 @@ ICLR 2026
 
 > This is the code for the paper "MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation".
 
-### 🏠[Project Page](https://shihao1895.github.io/MemoryVLA/) | 📑[Paper](https://arxiv.org/abs/2508.19236) | 🤗[Models & Logs](https://huggingface.co/collections/shihao1895/memoryvla)
+### 🏠[MemoryVLA Project](https://shihao1895.github.io/MemoryVLA) | 🏠[MemoryVLA++ Project](https://shihao1895.github.io/MemoryVLA-PP-Web) | 📑[Paper](https://arxiv.org/abs/2508.19236) | 🤗[Models & Logs](https://huggingface.co/collections/shihao1895/memoryvla)
 
 ## 🌟 News
 
+- 🔥 [2026-6-9] Extended journal version [MemoryVLA++](https://shihao1895.github.io/MemoryVLA-PP-Web) is available!
 - 🔥 [2026-1-27] Our paper [MemoryVLA](https://arxiv.org/abs/2508.19236) is accepted by ICLR 2026!
 - 🔥 [2025-11-5] The code of [MemoryVLA](https://arxiv.org/abs/2508.19236) is released! (Both MemoryVLA and MemoryVLA+)
 - 🔥 [2025-10-20] Our VLA codebase [Dexbotic](https://github.com/Dexmal/dexbotic) is released, it now fully integrates MemoryVLA !
@@ -22,21 +23,27 @@ MemoryVLA is a Cognition-Memory-Action framework for robotic manipulation inspir
 
 ![MemoryVLA Overview](images/intro.png)
 
-We release two versions of the code in separate branches:
+We release three versions of the code in separate branches:
 
 - **[MemoryVLA](https://github.com/shihao1895/MemoryVLA/tree/openvla-codebase)**:  built upon the OpenVLA codebase.
 - **[MemoryVLA+](https://github.com/shihao1895/MemoryVLA/tree/dexbotic-codebase)**:  built upon our self-developed [Dexbotic](https://dexbotic.com) codebase, which offers higher simulation performance.
+- **MemoryVLA++**:  extended journey version of MemoryVLA.
 
 ## TODO
 
-All components are now available, and we will continue to refine and improve the code.
+All components of MemoryVLA are now available, and MemoryVLA++ will be released in the coming months.
 
-- [x] Code Release
-  - [x] MemoryVLA (OpenVLA codebase)
-  - [x] MemoryVLA+ (Dexbotic codebase)
+- [x] MemoryVLA (OpenVLA codebase)
+  - [x] Code Release
+  - [x] Model Weights Release
+  - [x] Dataset Upload to HuggingFace
 
-- [x] Model Weights Release
-- [x] Dataset Upload to HuggingFace
+- [x] MemoryVLA+ (Dexbotic codebase)
+- [ ] MemoryVLA++ (Extended Journey Version)
+  - [ ] Code Release
+  - [ ] Model Weights Release
+  - [ ] Dataset Upload to HuggingFace
+
 
 ## Contents
 
@@ -44,32 +51,56 @@ This is MemoryVLA based on OpenVLA codebase, **if you need use dexbotic codebase
 
  * [**Model Zoo & Benchmark Results**](#Model-Zoo-&-Benchmark-Results)
  * [**Install**](#Install)
- * [**Training**](#Training)
+ * [**Evaluation in Libero**](#Evaluation-in-Libero)
  * [**Evaluation in SimplerEnv**](#Evaluation-in-SimplerEnv)
- * [**Evaluation in LIBERO**](#Evaluation-in-LIBERO)
+ * [**Training**](#Training)
  * [**Deployment in The Real World**](#deployment-in-the-real-world)
  * [**FAQ**](#FAQ)
  * [**Citation**](#Citation)
 
 ## Model Zoo & Benchmark Results
 
-> All datasets use only third-person RGB and language, without using wrist-view images or state.
 > MemoryVLA means openvla-codebase version, MemoryVLA+ means dexbotic-codebase version.
 
-### Bridge
-
-| Model      | Spoon | Carrot | Cube | Eggplant | Avg. | CKPT & Logs                                                  |
-| ---------- | ----- | ------ | ---- | -------- | ---- | ------------------------------------------------------------ |
-| MemoryVLA  | 75.0  | 75.0   | 37.5 | 100.0    | 71.9 | [🤗 HF](https://huggingface.co/shihao1895/memvla-bridge)      |
-| MemoryVLA+ | 100.0 | 66.7   | 70.8 | 100.0    | 84.4 | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-bridge) |
-
-### LIBERO
+### Libero
 
 | Model            | Spatial | Object | Goal | Long-10 | Long-90 | Avg. | CKPT & Logs                                                  |
 | ---------------- | ------- | ------ | ---- | ------- | ------- | ---- | ------------------------------------------------------------ |
 | MemoryVLA        | 98.4    | 98.4   | 96.4 | 93.4    | 95.6    | 96.5 | [🤗 Spa](https://huggingface.co/shihao1895/memvla-libero-spatial), [🤗 Obj](https://huggingface.co/shihao1895/memvla-libero-object), [🤗 Goal](https://huggingface.co/shihao1895/memvla-libero-goal), [🤗 100](https://huggingface.co/shihao1895/memvla-libero-100) |
 | MemoryVLA+       | 98.2    | 97.8   | 96.4 | 93.6    | 96.2    | 96.5 | [🤗 Spa](https://huggingface.co/shihao1895/memvla-plus-libero-spatial), [🤗 Obj](https://huggingface.co/shihao1895/memvla-plus-libero-object), [🤗 Goal](https://huggingface.co/shihao1895/memvla-plus-libero-goal), [🤗 100](https://huggingface.co/shihao1895/memvla-plus-libero-100) |
 | MemoryVLA+ (mix) | 97.2    | 99.2   | 98.4 | 93.2    | 97.2    | 97.1 | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-libero-mix) |
+| MemoryVLA++      | 99.8    | 100.0  | 98.2 | 96.0    | 97.8    | 98.4 | TBD                                                          |
+
+### SimplerEnv-Bridge
+
+| Model       | Spoon | Carrot | Cube | Eggplant | Avg. | CKPT & Logs                                                  |
+| ----------- | ----- | ------ | ---- | -------- | ---- | ------------------------------------------------------------ |
+| MemoryVLA   | 75.0  | 75.0   | 37.5 | 100.0    | 71.9 | [🤗 HF](https://huggingface.co/shihao1895/memvla-bridge)      |
+| MemoryVLA+  | 100.0 | 66.7   | 70.8 | 100.0    | 84.4 | [🤗 HF](https://huggingface.co/shihao1895/memvla-plus-bridge) |
+| MemoryVLA++ | 83.3  | 66.7   | 45.8 | 100.0    | 73.9 | TBD                                                          |
+
+### Mikasa-Robo
+
+| Model       | SGT  | IM   | RC3  | RC5  | RC9  | Avg. | CKPT & Logs                                             |
+| ----------- | ---- | ---- | ---- | ---- | ---- | ---- | ------------------------------------------------------- |
+| MemoryVLA   | 88   | 24   | 44   | 30   | 20   | 41.2 | [🤗 HF](https://huggingface.co/shihao1895/memvla-mikasa) |
+| MemoryVLA++ | 97   | 40   | 50   | 19   | 16   | 44.4 | TBD                                                     |
+
+### Libero-Plus
+
+| Model             | Cam  | Robo | Lang | Light | Backg | Noi  | Layout | Avg. | CKPT & Logs |
+| ----------------- | ---- | ---- | ---- | ----- | ----- | ---- | ------ | ---- | ----------- |
+| MemoryVLA         | 42.7 | 44.9 | 84.4 | 92.8  | 95.0  | 62.1 | 84.7   | 70.2 | TBD         |
+| MemoryVLA++       | 36.4 | 68.9 | 88.7 | 93.8  | 90.6  | 63.5 | 83.8   | 73.1 | TBD         |
+| MemoryVLA (SFT)   | 91.4 | 48.6 | 79.4 | 95.2  | 95.3  | 94.0 | 75.7   | 81.9 | TBD         |
+| MemoryVLA++ (SFT) | 96.8 | 49.7 | 71.0 | 96.6  | 97.0  | 96.0 | 78.6   | 82.7 | TBD         |
+
+### Calvin
+
+| Model       | 1    | 2    | 3    | 4    | 5    | Avg. | CKPT & Logs |
+| ----------- | ---- | ---- | ---- | ---- | ---- | ---- | ----------- |
+| MemoryVLA   | 94.8 | 87.4 | 81.4 | 75.9 | 69.4 | 4.09 | TBD         |
+| MemoryVLA++ | 95.6 | 90.2 | 85.7 | 81.7 | 76.1 | 4.29 | TBD         |
 
 ### Fractal-VM
 
@@ -126,6 +157,40 @@ If you are using an NVIDIA Hopper GPU (e.g., H20) and encounter the error
 pip install nvidia-cublas-cu12==12.4.5.8
 ```
 
+## Evaluation in Libero
+
+We also provide evaluation interfaces and scripts based on [LIBERO](https://libero-project.github.io/intro.html).
+
+1. Please follow the installation guide in the [LIBERO Repo](https://github.com/Lifelong-Robot-Learning/LIBERO) to set up the simulation environment, and make sure to place the repo under: `./third_libs/LIBERO`
+
+2. Evaluation Example.
+
+   ```bash
+   # Run evaluation
+   bash script/eval/libero/eval_libero.sh
+   # Summarize results
+   python script/eval/libero/extract_libero_results.py
+   ```
+
+   > **NOTE:** The evaluation mechanism here is different from SimplerEnv. The process first loads the model using `develop.py`, then waits for a period before running `evaluation/libero/eval_libero.py` for testing. In addition, since performance may vary across iterations, please evaluate multiple checkpoints and report the best result.
+
+## Evaluation in SimplerEnv
+
+We provide evaluation interfaces and scripts based on [SimplerEnv](https://simpler-env.github.io/).
+
+1. Please follow the installation guide in the [SimplerEnv Repo](https://github.com/simpler-env/SimplerEnv) to set up the simulation environment, and make sure to place the repo under: `./third_libs/SimplerEnv`
+
+2. Evaluation Example.
+
+   ```bash
+   # Run evaluation
+   bash script/eval/bridge/eval_bridge.sh
+   # Summarize results
+   python script/eval/bridge/extract_bridge_results.py
+   ```
+
+   > **NOTE**: Due to the instability of the SimplerEnv benchmark and diffusion process, the performance scores across different iterations can vary significantly. Please evaluate checkpoints **every 2.5k steps** and report the best result.
+
 ## Training
 
 1. Prepare training dataset with [RLDS](https://github.com/google-research/rlds) format:
@@ -179,40 +244,6 @@ pip install nvidia-cublas-cu12==12.4.5.8
    ```
 
    To finetune on your own customized data, please follow the instruction [(rlds_dataset_builder)](https://github.com/kpertsch/rlds_dataset_builder) for converting your data to RLDS format. The actions should be the deltas of end effector ``EEF Delta XYZ (3) + Roll-Pitch-Yaw (3) + Gripper Open/Close (1)``. Once your customized data is ready, place the customized data directly under the ``<data_root_dir>/custom_finetuning/1.0.0`` directory. Then set ``vla.data_mix="custom_finetuning"``.
-
-## Evaluation in SimplerEnv
-
-We provide evaluation interfaces and scripts based on [SimplerEnv](https://simpler-env.github.io/).
-
-1. Please follow the installation guide in the [SimplerEnv Repo](https://github.com/simpler-env/SimplerEnv) to set up the simulation environment, and make sure to place the repo under: `./third_libs/SimplerEnv`
-
-2. Evaluation Example.
-
-   ```bash
-   # Run evaluation
-   bash script/eval/bridge/eval_bridge.sh
-   # Summarize results
-   python script/eval/bridge/extract_bridge_results.py
-   ```
-
-   > **NOTE**: Due to the instability of the SimplerEnv benchmark and diffusion process, the performance scores across different iterations can vary significantly. Please evaluate multiple checkpoints and report the best result.
-
-## Evaluation in LIBERO
-
-We also provide evaluation interfaces and scripts based on [LIBERO](https://libero-project.github.io/intro.html).
-
-1. Please follow the installation guide in the [LIBERO Repo](https://github.com/Lifelong-Robot-Learning/LIBERO) to set up the simulation environment, and make sure to place the repo under: `./third_libs/LIBERO`
-
-2. Evaluation Example.
-
-   ```bash
-   # Run evaluation
-   bash script/eval/libero/eval_libero.sh
-   # Summarize results
-   python script/eval/libero/extract_libero_results.py
-   ```
-
-   > **NOTE:** The evaluation mechanism here is different from SimplerEnv. The process first loads the model using `develop.py`, then waits for a period before running `evaluation/libero/eval_libero.py` for testing. In addition, since performance may vary across iterations, please evaluate multiple checkpoints and report the best result.
 
 ## Deployment in the Real World
 
@@ -273,7 +304,7 @@ sudo apt install -y ffmpeg
 
 (4) **Benchmark Score Fluctuations**
 
-Benchmark scores tend to fluctuate, so we recommend evaluating checkpoints at regular iteration intervals and reporting the best result. Moreover, we have observed that even slight differences in Conda package versions may lead to small variations in the scores.
+Benchmark scores may fluctuate across training iterations, with particularly large variations observed on SimplerEnv. We therefore recommend **evaluating checkpoints at regular iteration intervals and reporting the best result**. In addition, even minor differences in Conda package versions may lead to variations in the scores.
 
 ## Citation
 
