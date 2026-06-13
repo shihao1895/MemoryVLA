@@ -22,7 +22,7 @@ body {
   box-shadow: 0 8px 24px rgba(10, 10, 10, 0.08);
   color: #3a3a3a;
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   font-family: "Google Sans", sans-serif;
   font-size: 0.98rem;
   font-weight: 600;
@@ -31,6 +31,7 @@ body {
   list-style: none;
   padding: 0.55rem 0.9rem;
   user-select: none;
+  white-space: nowrap;
 }
 
 .top-more-research summary:hover {
@@ -622,4 +623,150 @@ body {
 @keyframes fadein {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+@media screen and (min-width: 900px) {
+  body {
+    padding-left: 11.5rem;
+  }
+
+  .top-more-research {
+    background: transparent;
+    left: 1.25rem;
+    padding: 0;
+    position: fixed;
+    top: 1.5rem;
+    z-index: 20;
+  }
+
+  .page-toc {
+    border-bottom: 0;
+    border-left: 2px solid #f0f0f0;
+    box-shadow: none;
+    display: block;
+    left: 1.25rem;
+    overflow-x: visible;
+    padding: 0;
+    position: fixed;
+    top: 7rem;
+    width: 10.25rem;
+  }
+
+  .page-toc a {
+    border-left: 2px solid transparent;
+    border-radius: 0;
+    font-size: 0.88rem;
+    margin-left: -2px;
+    padding: 0.38rem 0.6rem;
+  }
+
+  .page-toc a:hover {
+    background: transparent;
+    border-left-color: #276ef1;
+  }
+
+  .page-toc a.toc-sub {
+    background: transparent;
+    font-size: 0.8rem;
+    padding-left: 1.2rem;
+  }
+
+  .page-toc a.toc-sub-2 {
+    background: transparent;
+    font-size: 0.74rem;
+    padding-left: 1.75rem;
+  }
+
+  .section-anchor > .columns > .column > div[style*=width],
+  .section-anchor > .columns > .column > .collapsible-wrapper,
+  .section-anchor > .columns > .column > .collapsible-content,
+  .video-section .video-section-heading,
+  .video-section .video-toggle-row,
+  .video-section .video-panel,
+  #abstract .container.is-max-desktop,
+  #BibTeX .container.is-max-desktop {
+    width: min(1120px, calc(100vw - 15rem)) !important;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  body {
+    padding-left: 13rem;
+  }
+
+  .top-more-research {
+    left: 2rem;
+  }
+
+  .page-toc {
+    left: 2rem;
+    top: 8rem;
+    width: 11rem;
+  }
+
+  .page-toc a {
+    font-size: 0.95rem;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .page-toc a.toc-sub {
+    font-size: 0.86rem;
+    padding-left: 1.4rem;
+  }
+
+  .page-toc a.toc-sub-2 {
+    font-size: 0.8rem;
+    padding-left: 2.1rem;
+  }
+
+  .section-anchor > .columns > .column > div[style*=width],
+  .section-anchor > .columns > .column > .collapsible-wrapper,
+  .section-anchor > .columns > .column > .collapsible-content,
+  .video-section .video-section-heading,
+  .video-section .video-toggle-row,
+  .video-section .video-panel,
+  #abstract .container.is-max-desktop,
+  #BibTeX .container.is-max-desktop {
+    width: min(1120px, calc(100vw - 17rem)) !important;
+  }
+}
+
+@media screen and (max-width: 899px) {
+  body {
+    padding-left: 0;
+  }
+
+  .top-more-research {
+    background: #fff;
+    padding: 0.45rem 0.75rem 0.2rem;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+
+  .top-more-research summary {
+    box-shadow: 0 4px 14px rgba(10, 10, 10, 0.08);
+    font-size: 0.85rem;
+    gap: 0.45rem;
+    padding: 0.35rem 0.6rem;
+  }
+
+  .top-more-research summary::after {
+    padding: 3px;
+  }
+
+  .top-more-research .more-research-dropdown {
+    margin-top: 0.35rem;
+    min-width: 9.5rem;
+  }
+
+  .page-toc {
+    padding: 0.25rem 0.65rem;
+    top: 2.6rem;
+  }
+
+  .page-toc a {
+    font-size: 0.86rem;
+    padding: 0.35rem 0.55rem;
+  }
 }
