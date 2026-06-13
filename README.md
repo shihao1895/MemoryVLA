@@ -318,6 +318,13 @@ If you find our work helpful in your research, please consider citing [our paper
   year={2025}
 }
 
+@article{shi2026memoryvla++,
+  title={MemoryVLA++: Temporal Modeling via Memory and Imagination in Vision-Language-Action Models},
+  author={Shi, Hao and Li, Weiye and Xie, Bin and Wang, Yulin and Zhou, Renping and Wang, Tiancai and Zhang, Xiangyu and Luo, Ping and Huang, Gao},
+  journal={arXiv preprint arXiv:2606.09827},
+  year={2026}
+}
+
 @article{dexbotic,
   title={Dexbotic: Open-Source Vision-Language-Action Toolbox},
   author={Dexbotic Contributors},
